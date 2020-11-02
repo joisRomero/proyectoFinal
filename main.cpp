@@ -3,7 +3,7 @@
 
 
 int main(){
-    mainLoginlogin();
+    mainLogin();
 
     getch();
     return 0;

@@ -15,6 +15,7 @@
 #define MAXSEXO 2
 
 using namespace std;
+HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
 char TSexo[MAXSEXO][LIM]= {"Masculino","Femenino"};
 
@@ -34,7 +35,7 @@ int leeEntero(string msje, int min, int max) {
 
         longitudNumero = strlen(numero);
         while ( i< longitudNumero && band==0) {
-            if (isdigit(numero[i]) != 0){
+            if (isdigit(numero[i]) != 0) {
                 i++;
             } else {
                 band = 1;
@@ -42,7 +43,7 @@ int leeEntero(string msje, int min, int max) {
             }
         }
 
-        if (band == 0){
+        if (band == 0) {
             numeroValidado = atoi(numero);
             if(numeroValidado<min || numeroValidado>max) {
                 cout<<"\nERROR INGRESE NUMERO NUEVAMENTE\n";
@@ -78,7 +79,7 @@ float leeReal(string msje, int min, int max) {
             }
         }
 
-        if (band == 0){
+        if (band == 0) {
             numeroValidado = atof(numero);
             if(numeroValidado<min || numeroValidado>max) {
                 cout<<"\nERROR INGRESE NUMERO NUEVAMENTE\n";
@@ -91,7 +92,7 @@ float leeReal(string msje, int min, int max) {
 }
 
 
-char leeDNI(string msje, char dniValidado[]){
+char leeDNI(string msje, char dniValidado[]) {
     char dni[50];
     int longitudDni,i;
     bool band = 0;
@@ -105,7 +106,7 @@ char leeDNI(string msje, char dniValidado[]){
 
         longitudDni = strlen(dni);
 
-        if (longitudDni != 8){
+        if (longitudDni != 8) {
             cout << "ERROR EL DNI TIENE OCHO CARACTERES";
             band = 1;
         }
@@ -204,29 +205,61 @@ int ComparaFechas(Fecha &F, Fecha &FP) {
 }
 
 //FUNCIONES PARA DIBUJAR
-void gotoxy(int x, int y){
+void gotoxy(int x, int y) {
     HANDLE hCon;
     hCon = GetStdHandle(STD_OUTPUT_HANDLE);
     COORD dwPos;
     dwPos.X = x;
     dwPos.Y = y;
-
     SetConsoleCursorPosition(hCon,dwPos);
 }
 
-void PintarCuadrado(int x1, int x2, int y1, int y2){
-    for (int i=x1;i<=x2;i++){
-        gotoxy(i,y1);printf("%c",205);
-        gotoxy(i,y2);printf("%c",205);
+void PintarCuadrado(int x1,int y1,int x2,int y2) {
+
+    int i;
+    for (i=x1; i<x2; i++) {
+        gotoxy(i,y1);
+        printf("%c",205);//linea horizontal superior
+        gotoxy(i,y2);
+        printf("%c",205);//linea horizontal inferior
     }
 
-    for (int i=y1+1;i<=y2;i++){
-        gotoxy(x1,i); printf("%c",186);
-        gotoxy(x2,i); printf("%c",186);
+    for (i=y1; i<y2; i++) {
+        gotoxy(x1,i);
+        printf("%c",186);//linea vertical izquierda
+        gotoxy(x2,i);
+        printf("%c",186);//linea vertical derecha
     }
-
     gotoxy(x1,y1); printf("%c",201);//Esquina Superior Izquierda
     gotoxy(x1,y2); printf("%c",200);//Esquina inferior Izquierda
     gotoxy(x2,y1); printf("%c",187);//Esquiza Superior Derecha
     gotoxy(x2,y2); printf("%c",188);//Esquina Inferior Derecha
+}
+
+//FUNCION LIMPIAR PANTALLA
+void limpia() {
+    int i,j;
+    for(i=5; i<=23; i++) {
+        for(j=3; j<=76; j++) {
+            gotoxy(j,i);
+            printf(" ");
+        }
+    }
+}
+
+// FUNCION PARA OCULTAR EL CURSOR
+void CursorOff() {
+    CONSOLE_CURSOR_INFO cursor = {1, FALSE};
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
+}
+
+//FUNCION PARA APARECER EL CURSOR
+void CursorOn(bool visible, DWORD size) { // set bool visible = 0 - invisible, bool visible = 1 - visible
+    if(size == 0) {
+        size = 20;	// default cursor size Changing to numbers from 1 to 20, decreases cursor width
+    }
+    CONSOLE_CURSOR_INFO lpCursor;
+    lpCursor.bVisible = visible;
+    lpCursor.dwSize = size;
+    SetConsoleCursorInfo(console,&lpCursor);
 }
