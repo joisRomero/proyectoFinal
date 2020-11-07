@@ -9,11 +9,6 @@
 #include <time.h>
 #include <windows.h>
 
-#define MAX 100
-#define LIM 50
-#define DELTA 20
-#define MAXSEXO 2
-
 using namespace std;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -53,6 +48,40 @@ int leeEntero(string msje, int min, int max) {
     } while (!(band == 0 && (numeroValidado>=min && numeroValidado<=max)));
 
     return numeroValidado;
+}
+
+int leeEnteroExacto(int exacto) {
+    char numero[50];
+    int longitudNumero, i, numeroValidado;
+    bool band = 0;
+
+    do {
+        band = 0;
+        i = 0;
+
+        cin.getline(numero,50);
+
+        longitudNumero = strlen(numero);
+        while ( i< longitudNumero && band==0) {
+            if (isdigit(numero[i]) != 0) {
+                i++;
+            } else {
+                band = 1;
+                cout << "\nERROR SOLO INGRESE NUMEROS";
+            }
+        }
+
+        if (band == 0) {
+            numeroValidado = atoi(numero);
+            if(strlen(numeroValidado)!=exacto) {
+                cout<<"\nERROR INGRESE NUMERO NUEVAMENTE\n";
+            }
+        }
+
+    } while (!(band == 0 && (strlen(numeroValidado)==exacto)));
+
+    return numeroValidado;
+
 }
 
 float leeReal(string msje, int min, int max) {
