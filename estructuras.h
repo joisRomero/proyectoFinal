@@ -1,3 +1,5 @@
+#include "basicas.h"
+//---------------------------  DIRECCIÓN  -------------------------//
 
 struct Direccion {
     char calle[LIM];
@@ -12,25 +14,61 @@ void iniciaDireccion(Direccion &Dir) {
 }
 
 void leeDireccion(Direccion &Dir) {
+    fflush(stdin);
     cout << "Calle: ";
     cin.getline(Dir.calle, LIM);
-
+    fflush(stdin);
     cout << "Distrito: ";
     cin.getline(Dir.distrito, LIM);
-
+    fflush(stdin);
     cout << "Provincias: ";
-    Dir.provincia = validaTabla("\nSeleccione: ",  , MAXTABLAPROVINCIA);
+    //Dir.provincia = validaTabla("\nSeleccione: ",  , MAXTABLAPROVINCIA);
+    fflush(stdin);
 }
 
-struct Cargo {
-    int grupoOcupacional;
-    int claseDeCargo;
+void mostrarDireccion(Direccion &Dir) {
+    cout << "Calle: " << Dir.calle;
+    cout << "Distrito: " << Dir.distrito;
+    cout << "Provincia: " << endl;//tablaprovincia-1;
+}
+
+//------------------------  MODULO ASISTENCIA  --------------------//
+
+struct ModuloAsistencia {
+    int asistencia;
+    int falta;
+    int tardanza;
+    int justificacion;
 };
 
-void iniciaCargo(Cargo &Carg) {
-    Carg.grupoOcupacional = 0;
-    Carg.claseDeCargo = 0;
+void iniciaModuloAsistencia(ModuloAsistencia &ModAsis) {
+    ModAsis.asistencia = 0;
+    ModAsis.falta = 0;
+    ModAsis.tardanza = 0;
+    ModAsis.justificacion = 0;
 }
+
+void leeAsistencia(ModuloAsistencia &ModAsis) {
+    fflush(stdin);
+    cout << "Asistencia: ";
+    ModAsis.asistencia = leeEntero(0, 31);
+    cout << "Falta(s): ";
+    ModAsis.falta = leeEntero(0, 31);
+    cout << "Tardanza(s): ";
+    ModAsis.tardanza = leeEntero(0, 31);
+    cout << "Justificacion(es): ";
+    ModAsis.justificacion = leeEntero(0, 31);
+    fflush(stdin);
+}
+
+void mostrarModuloAsistencia(ModuloAsistencia &ModAsis) {
+    cout << "Asistencia: " << ModAsis.asistencia;
+    cout << "Falta(s): " << ModAsis.falta;
+    cout << "Tardanza(s): " << ModAsis.tardanza;
+    cout << "Justificacion(es): " << ModAsis.justificacion;
+}
+
+//-----------------------------  SUELDO  --------------------------//
 
 struct Sueldo {
     float sueldoBase;
@@ -45,6 +83,51 @@ void iniciaSueldo(Sueldo &Sue) {
     Sue.descuento = 0.0;
     Sue.sueldoNeto = 0.0;
 }
+//solo llamar a esta funcion cuando ya ha cumplido 1 mes como mínimo
+float leeSueldo(Sueldo &Sue) {
+    fflush(stdin);
+    cout << "Sueldo Base: ";
+    Sue.sueldoBase = leeReal(SUELDOMINIMO, MAXSUELDOBASE);
+
+    Sue.sueldoNeto = Sue.sueldoBase+Sue.asignacionFamiliar-Sue.descuento;
+    return Sue.sueldoNeto;
+}
+
+
+void mostrarSueldo(Sueldo &Sue) {
+    cout << "Sueldo Base: " << Sue.sueldoBase;
+    cout << "Asignacion Familiar: " << Sue.asignacionFamiliar;
+    cout << "Descuento: " << Sue.descuento;
+    cout << "Sueldo Neto: " << Sue.sueldoNeto;
+}
+
+//-------------------------------  CARGO  -------------------------//
+
+struct Cargo {
+    int grupoOcupacional;
+    int claseDeCargo;
+};
+
+void iniciaCargo(Cargo &Carg) {
+    Carg.grupoOcupacional = 0;
+    Carg.claseDeCargo = 0;
+}
+
+void leeCargo(Cargo &Carg) {
+    fflush(stdin);
+    cout << "Grupos Ocupacionales: ";
+//    Carg.grupoOcupacional = validaTabla("\nSeleccione: ", , MAXTABLAGRUPOOCUPACIONAL);
+
+    cout << "Clase de cargo: ";
+    Carg.claseDeCargo = leeEntero(1, MAXCLASEDECARGO);
+}
+
+void mostrarCargo(Cargo &Carg) {
+    cout << "Grupo Ocupacional: " << endl;//tablagrupoocupacional;
+    cout << "Clase de cargo: " << Carg.claseDeCargo;
+}
+
+//-----------------------------  CONTRATO  ------------------------//
 
 struct Contrato {
     int horario;
@@ -71,41 +154,46 @@ void iniciaContrato(Contrato &Contr) {
 }
 
 void leeContrato(Contrato &Contr) {
+    fflush(stdin);
     cout << "Horario: ";
-    Contr.horario = validaTabla("\nSeleccione: ",, MAXTABLAHORARIO);
+//    Contr.horario = validaTabla("\nSeleccione: ", , MAXTABLAHORARIO);
 
     cout << "Numero de Cuenta: ";
-    Contr.nroCuenta = leeEnteroExacto(MAXNROCUENTA);
+    leeTextoComoNumero("NUMERO DE CUENTA", Contr.nroCuenta, MAXNROCUENTA+1);
 
     cout << "Codigo de Cuenta Interbancario (CCI): ";
-    Contr.cci = leeEnteroExacto(MAXCCI);
+    leeTextoComoNumero("CCI", Contr.cci,MAXCCI);
 
     cout << "Bancos: ";
-    Contr.banco = validaTabla("\nSeleccione: ",, MAXTABLABANCO);
+//    Contr.banco = validaTabla("\nSeleccione: ", , MAXTABLABANCO);
 
     cout << "Tipos de trabajadores: ";
-    Contr.tipoTrabajador = validaTabla("\nSeleccione: ",, MAXTABLATIPOTRABAJADOR);
+//    Contr.tipoTrabajador = validaTabla("\nSeleccione: ", , MAXTABLATIPOTRABAJADOR);
 
+    cout << "Inicio de contrato: ";
+    leeFecha(Contr.inicioContrato);
 
+    cout << "Fin de contrato: ";
+    leeFecha(Contr.finContrato);
 
-    leeCargo();
-    leeSueldo();
+    leeCargo(Contr.cargo);
+    leeSueldo(Contr.sueldo);
 
 }
 
-struct ModuloAsistencia {
-    int asistencia;
-    int falta;
-    int tardanza;
-    int justificacion;
-};
-
-void iniciaModuloAsistencia(ModuloAsistencia &ModAsis) {
-    ModAsis.asistencia = 0;
-    ModAsis.falta = 0;
-    ModAsis.tardanza = 0;
-    ModAsis.justificacion = 0;
+void mostrarContrato(Contrato &Contr) {
+    cout << "Horario: " << endl;//tablahorario;
+    cout << "Numero de Cuenta: " << Contr.nroCuenta;
+    cout << "CCI: " << Contr.cci;
+    cout << "Banco: " << endl;//tablabanco-1;
+    cout << "Tipo de trabajador: " << endl; //tablatipodetrabajador-1;
+    cout << "Inicio de contrato: "; MostrarFecha(Contr.inicioContrato);
+    cout << "Fin del contrato: "; MostrarFecha(Contr.finContrato);
+    mostrarCargo(Contr.cargo);
+    mostrarSueldo(Contr.sueldo);
 }
+
+//-------------------------  TRABAJADOR  --------------------------//
 
 struct Trabajador {
     char dni[MAXDNI];
@@ -118,10 +206,13 @@ struct Trabajador {
     int gradoInstruccion;
     char correo[LIM];
     char codigo[MAXCODIGO];
+
     Direccion direccion;
     Contrato contrato;
     ModuloAsistencia asistencia;
 };
+
+char generarCodigo(Contrato &Contr, Trabajador &Trab);
 
 void iniciaTrabajador(Trabajador &Trab) {
     Trab.dni[0] = NULL;
@@ -134,78 +225,54 @@ void iniciaTrabajador(Trabajador &Trab) {
     Trab.gradoInstruccion = 0;
     Trab.correo[0] = 0;
     Trab.codigo[0] = NULL;
+
     iniciaDireccion(Trab.direccion);
     iniciaContrato(Trab.contrato);
     iniciaModuloAsistencia(Trab.asistencia);
 }
 
-
-void leeTrabajador(Trabajador &Trab) {
+void leeTrabajador(Contrato &Contr, Trabajador &Trab) {
     cout << "DNI: ";
-    cin.getline(Trab.dni,MAXDNI);
-
+    leeTextoComoNumero("DNI",Trab.dni, MAXDNI);
+    fflush(stdin);
     cout << "Nombre Completo: ";
     cin.getline(Trab.nombre,LIM);
-
+    fflush(stdin);
     cout << "RUC: ";
-    cin.getline(Trab.ruc, MAXRUC);
+    leeTextoComoNumero("RUC", Trab.ruc, MAXRUC);
 
     cout << "Telefono: ";
-    cin.getline(Trab.telefono, MAXTELEFONO);
+    leeTextoComoNumero("TELEFONO", Trab.telefono,MAXTELEFONO);
 
     cout << "Sistemas de Fondo de Pensiones: " << endl;
-    Trab.fondoPensiones = validaTabla("\nSeleccione: ",,MAXTABLAFONDOPENSIONES);
+//    Trab.fondoPensiones = validaTabla("\nSeleccione: ",,MAXTABLAFONDOPENSIONES);
 
     cout << "Numero de hijos: "<<endl;
-    Trab.nroHijos = leeEntero(" ", 0, 15);
+    Trab.nroHijos = leeEntero(0, 15);
 
     cout << "Estado Civil: " << endl;
-    Trab.estadoCivil = validaTabla("\nSeleccione: ",, MAXTABLAESTADOCIVIL);
+//    Trab.estadoCivil = validaTabla("\nSeleccione: ",, MAXTABLAESTADOCIVIL);
 
     cout << "Grados de Instruccion: ";
-    Trab.gradoInstruccion = validaTabla("\nSeleccione: ",, MAXTABLAGRADOINSTRUCCION);
-
+//    Trab.gradoInstruccion = validaTabla("\nSeleccione: ",, MAXTABLAGRADOINSTRUCCION);
+    fflush(stdin);
     cout << "Correo: ";
     cin.getline(Trab.correo, LIM);
+    fflush(stdin);
 
-    //faltan asignar Trab.codigo además de las funciones de leedireccion leecontrato y leeasistencia
+    int anio = Contr.inicioContrato.Anio;
+    char codigoFK[MAXCODIGO];
+    itoa(anio, codigoFK, 10);
 
-    leeDireccion();
-    leeContrato();
-    leeAsistencia();
+    char b[MAXDNI];
+    strcpy(b,Trab.dni);
 
-
-}
-
-
+    strcat (codigoFK, b);
 
 
-void leeCargo(Cargo &Carg) {
-    cout << "Grupos Ocupacionales: ";
-    Carg.grupoOcupacional = validaTabla("\nSeleccione: ",, MAXTABLAGRUPOOCUPACIONAL);
-
-    cout << "Clase de cargo: ";
-    Carg.claseDeCargo = leeEntero(" ", 1, MAXCLASEDECARGO);
-}
-
-float leeSueldo(Sueldo &Sue) {
-    cout << "Sueldo Base: ";
-    Sue.sueldoBase = leeReal(" ", SUELDOMINIMO, MAXSUELDOBASE);
-
-    Sue.sueldoNeto = Sue.sueldoBase+Sue.asignacionFamiliar-Sue.descuento;
-    return Sue.sueldoNeto;
-}
-
-//solo llamar a esta funcion cuando ya ha cumplido 1 mes como mínimo
-void leeAsistencia(ModuloAsistencia &ModAsis) {
-    cout << "Asistencia: ";
-    ModAsis.asistencia = leeEntero(" ", 0, 31);
-    cout << "Falta(s): ";
-    ModAsis.falta = leeEntero(" ", 0, 31);
-    cout << "Tardanza(s): ";
-    ModAsis.tardanza = leeEntero(" ", 0, 31);
-    cout << "Justificacion(es): ";
-    ModAsis.justificacion = leeEntero(" ", 0, 31);
+    leeDireccion(Trab.direccion);
+    leeContrato(Trab.contrato);
+    leeAsistencia(Trab.asistencia);
 }
 
 void mostrarTrabajador(Trabajador &Trab) {
@@ -213,52 +280,14 @@ void mostrarTrabajador(Trabajador &Trab) {
     cout << "Nombre Completo: " << Trab.nombre;
     cout << "RUC: " << Trab.ruc;
     cout << "Telefono: " << Trab.telefono;
-    cout << "Sitema de Fondo de Pension: " << //tablafondopensiones;
-         cout << "Numero de hijos: " << Trab.nroHijos;
-    cout << "Estado Civil: " << //tablaestadocivil;
-         cout << "Grado de Instruccion: " << //tablagradodeinstruccion;
-         cout << "Correo: " << Trab.correo;
+    cout << "Sitema de Fondo de Pension: " << endl;//tablafondopensiones;
+    cout << "Numero de hijos: " << Trab.nroHijos;
+    cout << "Estado Civil: " << endl;//tablaestadocivil;
+    cout << "Grado de Instruccion: " << endl;//tablagradodeinstruccion;
+    cout << "Correo: " << Trab.correo;
     cout << "Codigo: " << Trab.codigo;
 
-    mostrarDireccion();
-    mostrarContrato();
-    mostrarModuloAsistencia();
-}
-
-void mostrarDireccion(Direccion &Dir) {
-    cout << "Calle: " << Dir.calle;
-    cout << "Distrito: " << Dir.distrito;
-    cout << "Provincia: " << //tablaprovincia-1;
-}
-
-void mostrarContrato(Contrato &Contr) {
-    cout << "Horario: " << //tablahorario;
-         cout << "Numero de Cuenta: " << Contr.nroCuenta;
-    cout << "CCI: " << Contr.cci;
-    cout << "Banco: " << //tablabanco-1;
-         cout << "Tipo de trabajador: " << //tablatipodetrabajador-1;
-         cout << "Inicio de cobro: " << //time;
-         cout << "Fin del contrato: " << //time;
-
-         mostrarCargo();
-    mostrarSueldo();
-}
-
-void mostrarCargo(Cargo &Carg) {
-    cout << "Grupo Ocupacional: " << //tablagrupoocupacional;
-         cout << "Clase de cargo: " << //tablaclasedecargo;
-}
-
-void mostrarSueldo(Sueldo &Sue) {
-    cout << "Sueldo Base: " << Sue.sueldoBase;
-    cout << "Asignacion Familiar: " << Sue.asignacionFamiliar;
-    cout << "Descuento: " << Sue.descuento;
-    cout << "Sueldo Neto: " << Sue.sueldoNeto;
-}
-
-void mostrarModuloAsistencia(ModuloAsistencia &ModAsis) {
-    cout << "Asistencia: " << ModAsis.asistencia;
-    cout << "Falta(s): " << ModAsis.falta;
-    cout << "Tardanza(s): " << ModAsis.tardanza;
-    cout << "Justificacion(es): " << ModAsis.justificacion;
+    mostrarDireccion(Trab.direccion);
+    mostrarContrato(Trab.contrato);
+    mostrarModuloAsistencia(Trab.asistencia);
 }

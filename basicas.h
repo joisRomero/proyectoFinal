@@ -17,7 +17,7 @@ char TSexo[MAXSEXO][LIM]= {"Masculino","Femenino"};
 
 // operacions basicas de datos simples
 
-int leeEntero(string msje, int min, int max) {
+int leeEntero(int min, int max) {
     char numero[50];
     int longitudNumero, i, numeroValidado;
     bool band = 0;
@@ -26,7 +26,6 @@ int leeEntero(string msje, int min, int max) {
         band = 0;
         i = 0;
 
-        cout << msje;
         cin.getline(numero,50);
 
         longitudNumero = strlen(numero);
@@ -51,41 +50,7 @@ int leeEntero(string msje, int min, int max) {
     return numeroValidado;
 }
 
-int leeEnteroExacto(int exacto) {
-    char numero[50];
-    int longitudNumero, i, numeroValidado;
-    bool band = 0;
-
-    do {
-        band = 0;
-        i = 0;
-
-        cin.getline(numero,50);
-
-        longitudNumero = strlen(numero);
-        while ( i< longitudNumero && band==0) {
-            if (isdigit(numero[i]) != 0) {
-                i++;
-            } else {
-                band = 1;
-                cout << "\nERROR SOLO INGRESE NUMEROS";
-            }
-        }
-
-        if (band == 0) {
-            numeroValidado = atoi(numero);
-            if(strlen(numeroValidado)!=exacto) {
-                cout<<"\nERROR INGRESE NUMERO NUEVAMENTE\n";
-            }
-        }
-
-    } while (!(band == 0 && (strlen(numeroValidado)==exacto)));
-
-    return numeroValidado;
-
-}
-
-float leeReal(string msje, int min, int max) {
+float leeReal(int min, int max) {
     char numero[50];
     int longitudNumero, i;
     bool band = 0;
@@ -95,7 +60,6 @@ float leeReal(string msje, int min, int max) {
         band = 0;
         i = 0;
 
-        cout << msje;
         cin.getline(numero,50);
 
         longitudNumero = strlen(numero);
@@ -122,27 +86,26 @@ float leeReal(string msje, int min, int max) {
 }
 
 
-char leeDNI(string msje, char dniValidado[]) {
-    char dni[50];
-    int longitudDni,i;
+char leeTextoComoNumero(string msje, char numValidado[], int maximo) {
+    char numero[50];
+    int longitudNum,i;
     bool band = 0;
 
     do {
         band = 0;
         i = 0;
 
-        cout << endl << msje;
-        cin.getline(dni,50);
+        cin.getline(numero,50);
 
-        longitudDni = strlen(dni);
+        longitudNum = strlen(numero);
 
-        if (longitudDni != 8) {
-            cout << "ERROR EL DNI TIENE OCHO CARACTERES";
+        if (longitudNum != maximo) {
+            cout << "ERROR, EL " << msje <<" INGRESADO DEBE TENER "<< maximo << " CARACTERES";
             band = 1;
         }
 
-        while ( i < longitudDni && band==0) {
-            if (isdigit(dni[i]) != 0) {
+        while ( i < longitudNum && band==0) {
+            if (isdigit(numero[i]) != 0) {
                 i++;
             } else {
                 band = 1;
@@ -151,7 +114,7 @@ char leeDNI(string msje, char dniValidado[]) {
         }
     } while (!(band == 0));
 
-    strcpy(dniValidado, dni);
+    strcpy(numValidado, numero);
 }
 
 //operaciones de vector enteros
@@ -180,7 +143,7 @@ int validaTabla(string msje, char T[][LIM], int tam) {
     for(int i=0; i<tam; i++) {
         cout<<i+1<<": "<<T[i]<<endl;
     }
-    opc=leeEntero(msje, 1, tam);
+    opc=leeEntero(1, tam);
     return opc;
 }
 
@@ -215,7 +178,6 @@ void iniciaFecha(Fecha &FV) {
 }
 
 void leeFecha(Fecha &FV) {
-    void LeeFecha(Fecha &FV) {
         do {
             cout<<"\nIngrese Dia: [dd] ";
             cin>>FV.Dia;
@@ -228,11 +190,10 @@ void leeFecha(Fecha &FV) {
             cout<<"Ingrese Anio: [aaaa]";
             cin>>FV.Anio;
         } while(!(FV.Anio>1900 && FV.Anio<=2020));
-    }
 }
 
 void MostrarFecha(Fecha &FV) {
-    cout << endl << FV.Dia << "/" << FV.Mes << "/" << FV.Anio;
+    cout << FV.Dia << "/" << FV.Mes << "/" << FV.Anio;
 }
 
 /*La función Comparafechas, permite compara 2 fechas dadas: F y FP, retornando lo siguiente:
@@ -268,7 +229,6 @@ void gotoxy(int x, int y) {
 }
 
 void PintarCuadrado(int x1,int y1,int x2,int y2) {
-
     int i;
     for (i=x1; i<x2; i++) {
         gotoxy(i,y1);
