@@ -1,5 +1,6 @@
 #include "basicas.h"
 #include "login.h"
+#include "estructuras.h"
 
 
 int main(){
