@@ -8,6 +8,7 @@
 #include <string>
 #include <time.h>
 #include <windows.h>
+#include "constantes.h"
 
 using namespace std;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -202,10 +203,16 @@ int MESACTUAL = fechaActual->tm_mon;
 int DIAACTUAL = fechaActual->tm_mday;
 
 struct Fecha {
-    int Dia = DIAACTUAL;
-    int Mes = MESACTUAL;
-    int Anio = ANIOACTUAL;
+    int Dia;
+    int Mes;
+    int Anio;
 };
+
+void iniciaFecha(Fecha &FV){
+    FV.Dia = 0;
+    FV.Mes = 0;
+    FV.Anio = 0;
+}
 
 void MostrarFecha(Fecha &FV) {
     cout << endl << FV.Dia << "/" << FV.Mes << "/" << FV.Anio;
