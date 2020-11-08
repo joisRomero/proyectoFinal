@@ -11,6 +11,17 @@ void iniciaDireccion(Direccion &Dir) {
     Dir.provincia = 0;
 }
 
+void leeDireccion(Direccion &Dir) {
+    cout << "Calle: ";
+    cin.getline(Dir.calle, LIM);
+
+    cout << "Distrito: ";
+    cin.getline(Dir.distrito, LIM);
+
+    cout << "Provincias: ";
+    Dir.provincia = validaTabla("\nSeleccione: ",  , MAXTABLAPROVINCIA);
+}
+
 struct Cargo {
     int grupoOcupacional;
     int claseDeCargo;
@@ -41,10 +52,8 @@ struct Contrato {
     char cci[MAXCCI];
     int banco;
     int tipoTrabajador;
-
     Fecha inicioContrato;
     Fecha finContrato;
-
     Cargo cargo;
     Sueldo sueldo;
 };
@@ -55,12 +64,33 @@ void iniciaContrato(Contrato &Contr) {
     Contr.cci[0] = NULL;
     Contr.banco = 0;
     Contr.tipoTrabajador = 0;
-    //time inicioCobro;
-    //time finContrato;
+    iniciaFecha(Contr.inicioContrato);
+    iniciaFecha(Contr.finContrato);
+    iniciaCargo(Contr.cargo);
+    iniciaSueldo(Contr.sueldo);
+}
+
+void leeContrato(Contrato &Contr) {
+    cout << "Horario: ";
+    Contr.horario = validaTabla("\nSeleccione: ",, MAXTABLAHORARIO);
+
+    cout << "Numero de Cuenta: ";
+    Contr.nroCuenta = leeEnteroExacto(MAXNROCUENTA);
+
+    cout << "Codigo de Cuenta Interbancario (CCI): ";
+    Contr.cci = leeEnteroExacto(MAXCCI);
+
+    cout << "Bancos: ";
+    Contr.banco = validaTabla("\nSeleccione: ",, MAXTABLABANCO);
+
+    cout << "Tipos de trabajadores: ";
+    Contr.tipoTrabajador = validaTabla("\nSeleccione: ",, MAXTABLATIPOTRABAJADOR);
 
 
-    Contr.ecargo = NULL;
-    Contr.esueldo = NULL;
+
+    leeCargo();
+    leeSueldo();
+
 }
 
 struct ModuloAsistencia {
@@ -88,10 +118,9 @@ struct Trabajador {
     int gradoInstruccion;
     char correo[LIM];
     char codigo[MAXCODIGO];
-
-    Direccion *edireccion;
-    Contrato *econtrato;
-    ModuloAsistencia *easistencia;
+    Direccion direccion;
+    Contrato contrato;
+    ModuloAsistencia asistencia;
 };
 
 void iniciaTrabajador(Trabajador &Trab) {
@@ -105,23 +134,10 @@ void iniciaTrabajador(Trabajador &Trab) {
     Trab.gradoInstruccion = 0;
     Trab.correo[0] = 0;
     Trab.codigo[0] = NULL;
-
-    Trab.edireccion = NULL;
-    Trab.econtrato = NULL;
-    Trab.easistencia = NULL;
+    iniciaDireccion(Trab.direccion);
+    iniciaContrato(Trab.contrato);
+    iniciaModuloAsistencia(Trab.asistencia);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 void leeTrabajador(Trabajador &Trab) {
@@ -161,39 +177,8 @@ void leeTrabajador(Trabajador &Trab) {
 
 }
 
-void leeDireccion(Direccion &Dir) {
-    cout << "Calle: ";
-    cin.getline(Dir.calle, LIM);
 
-    cout << "Distrito: ";
-    cin.getline(Dir.distrito, LIM);
 
-    cout << "Provincias: ";
-    Dir.provincia = validaTabla("\nSeleccione: ",, MAXTABLAPROVINCIA);
-}
-
-void leeContrato(Contrato &Contr) {
-    cout << "Horario: ";
-    Contr.horario = validaTabla("\nSeleccione: ",, MAXTABLAHORARIO);
-
-    cout << "Numero de Cuenta: ";
-    Contr.nroCuenta = leeEnteroExacto(MAXNROCUENTA);
-
-    cout << "Codigo de Cuenta Interbancario (CCI): ";
-    Contr.cci = leeEnteroExacto(MAXCCI);
-
-    cout << "Bancos: ";
-    Contr.banco = validaTabla("\nSeleccione: ",, MAXTABLABANCO);
-
-    cout << "Tipos de trabajadores: ";
-    Contr.tipoTrabajador = validaTabla("\nSeleccione: ",, MAXTABLATIPOTRABAJADOR);
-
-    //time
-
-    leeCargo();
-    leeSueldo();
-
-}
 
 void leeCargo(Cargo &Carg) {
     cout << "Grupos Ocupacionales: ";

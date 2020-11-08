@@ -208,10 +208,27 @@ struct Fecha {
     int Anio;
 };
 
-void iniciaFecha(Fecha &FV){
+void iniciaFecha(Fecha &FV) {
     FV.Dia = 0;
     FV.Mes = 0;
     FV.Anio = 0;
+}
+
+void leeFecha(Fecha &FV) {
+    void LeeFecha(Fecha &FV) {
+        do {
+            cout<<"\nIngrese Dia: [dd] ";
+            cin>>FV.Dia;
+        } while(!(FV.Dia>0 && FV.Dia<=31));
+        do {
+            cout<<"Ingrese Mes: [mm]";
+            cin>>FV.Mes;
+        } while(!(FV.Mes>0 && FV.Mes<=12));
+        do {
+            cout<<"Ingrese Anio: [aaaa]";
+            cin>>FV.Anio;
+        } while(!(FV.Anio>1900 && FV.Anio<=2020));
+    }
 }
 
 void MostrarFecha(Fecha &FV) {
@@ -266,10 +283,14 @@ void PintarCuadrado(int x1,int y1,int x2,int y2) {
         gotoxy(x2,i);
         printf("%c",186);//linea vertical derecha
     }
-    gotoxy(x1,y1); printf("%c",201);//Esquina Superior Izquierda
-    gotoxy(x1,y2); printf("%c",200);//Esquina inferior Izquierda
-    gotoxy(x2,y1); printf("%c",187);//Esquiza Superior Derecha
-    gotoxy(x2,y2); printf("%c",188);//Esquina Inferior Derecha
+    gotoxy(x1,y1);
+    printf("%c",201);//Esquina Superior Izquierda
+    gotoxy(x1,y2);
+    printf("%c",200);//Esquina inferior Izquierda
+    gotoxy(x2,y1);
+    printf("%c",187);//Esquiza Superior Derecha
+    gotoxy(x2,y2);
+    printf("%c",188);//Esquina Inferior Derecha
 }
 
 //FUNCION LIMPIAR PANTALLA
