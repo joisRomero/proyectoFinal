@@ -17,7 +17,7 @@ char TSexo[MAXSEXO][LIM]= {"Masculino","Femenino"};
 
 // operacions basicas de datos simples
 
-int leeEntero(int min, int max) {
+int leeEntero(string msj, int min, int max) {
     char numero[50];
     int longitudNumero, i, numeroValidado;
     bool band = 0;
@@ -26,31 +26,26 @@ int leeEntero(int min, int max) {
         band = 0;
         i = 0;
 
+        cout << msj;
+        fflush(stdin);
         cin.getline(numero,50);
 
         longitudNumero = strlen(numero);
         while ( i< longitudNumero && band==0) {
-            if (isdigit(numero[i]) != 0) {
+            if (isdigit(numero[i]) != 0)
                 i++;
-            } else {
+            else
                 band = 1;
-                cout << "\nERROR SOLO INGRESE NUMEROS";
-            }
         }
 
-        if (band == 0) {
+        if (band == 0)
             numeroValidado = atoi(numero);
-            if(numeroValidado<min || numeroValidado>max) {
-                cout<<"\nERROR INGRESE NUMERO NUEVAMENTE\n";
-            }
-        }
-
     } while (!(band == 0 && (numeroValidado>=min && numeroValidado<=max)));
 
     return numeroValidado;
 }
 
-float leeReal(int min, int max) {
+float leeReal(string msj, int min, int max) {
     char numero[50];
     int longitudNumero, i;
     bool band = 0;
@@ -60,6 +55,8 @@ float leeReal(int min, int max) {
         band = 0;
         i = 0;
 
+        cout << msj;
+        fflush(stdin);
         cin.getline(numero,50);
 
         longitudNumero = strlen(numero);
@@ -95,6 +92,7 @@ char leeTextoComoNumero(string msje, char numValidado[], int maximo) {
         band = 0;
         i = 0;
 
+        cout << msje;
         cin.getline(numero,50);
 
         longitudNum = strlen(numero);
@@ -143,7 +141,7 @@ int validaTabla(string msje, char T[][LIM], int tam) {
     for(int i=0; i<tam; i++) {
         cout<<i+1<<": "<<T[i]<<endl;
     }
-    opc=leeEntero(1, tam);
+    opc=leeEntero(msje,1, tam);
     return opc;
 }
 
@@ -178,18 +176,18 @@ void iniciaFecha(Fecha &FV) {
 }
 
 void leeFecha(Fecha &FV) {
-        do {
-            cout<<"\nIngrese Dia: [dd] ";
-            cin>>FV.Dia;
-        } while(!(FV.Dia>0 && FV.Dia<=31));
-        do {
-            cout<<"Ingrese Mes: [mm]";
-            cin>>FV.Mes;
-        } while(!(FV.Mes>0 && FV.Mes<=12));
-        do {
-            cout<<"Ingrese Anio: [aaaa]";
-            cin>>FV.Anio;
-        } while(!(FV.Anio>1900 && FV.Anio<=2020));
+    do {
+        cout<<"\nIngrese Dia: [dd] ";
+        cin>>FV.Dia;
+    } while(!(FV.Dia>0 && FV.Dia<=31));
+    do {
+        cout<<"Ingrese Mes: [mm]";
+        cin>>FV.Mes;
+    } while(!(FV.Mes>0 && FV.Mes<=12));
+    do {
+        cout<<"Ingrese Anio: [aaaa]";
+        cin>>FV.Anio;
+    } while(!(FV.Anio>1900 && FV.Anio<=2020));
 }
 
 void MostrarFecha(Fecha &FV) {

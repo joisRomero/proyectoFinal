@@ -50,14 +50,10 @@ void iniciaModuloAsistencia(ModuloAsistencia &ModAsis) {
 
 void leeAsistencia(ModuloAsistencia &ModAsis) {
     fflush(stdin);
-    cout << "Asistencia: ";
-    ModAsis.asistencia = leeEntero(0, 31);
-    cout << "Falta(s): ";
-    ModAsis.falta = leeEntero(0, 31);
-    cout << "Tardanza(s): ";
-    ModAsis.tardanza = leeEntero(0, 31);
-    cout << "Justificacion(es): ";
-    ModAsis.justificacion = leeEntero(0, 31);
+    ModAsis.asistencia = leeEntero( "Asistencia: ", 0, 31);
+    ModAsis.falta = leeEntero("Falta(s): ", 0, 31);
+    ModAsis.tardanza = leeEntero("Tardanza(s): ", 0, 31);
+    ModAsis.justificacion = leeEntero("Justificacion(es): ", 0, 31);
     fflush(stdin);
 }
 
@@ -84,13 +80,12 @@ void iniciaSueldo(Sueldo &Sue) {
     Sue.sueldoNeto = 0.0;
 }
 //solo llamar a esta funcion cuando ya ha cumplido 1 mes como mínimo
-float leeSueldo(Sueldo &Sue) {
+void leeSueldo(Sueldo &Sue) {
     fflush(stdin);
-    cout << "Sueldo Base: ";
-    Sue.sueldoBase = leeReal(SUELDOMINIMO, MAXSUELDOBASE);
+    Sue.sueldoBase = leeReal("Sueldo Base: ", SUELDOMINIMO, MAXSUELDOBASE);
 
-    Sue.sueldoNeto = Sue.sueldoBase+Sue.asignacionFamiliar-Sue.descuento;
-    return Sue.sueldoNeto;
+//    Sue.sueldoNeto = Sue.sueldoBase+Sue.asignacionFamiliar-Sue.descuento;
+//    return Sue.sueldoNeto;
 }
 
 
@@ -118,8 +113,7 @@ void leeCargo(Cargo &Carg) {
     cout << "Grupos Ocupacionales: ";
 //    Carg.grupoOcupacional = validaTabla("\nSeleccione: ", , MAXTABLAGRUPOOCUPACIONAL);
 
-    cout << "Clase de cargo: ";
-    Carg.claseDeCargo = leeEntero(1, MAXCLASEDECARGO);
+    Carg.claseDeCargo = leeEntero("Clase de cargo: ", 1, MAXCLASEDECARGO);
 }
 
 void mostrarCargo(Cargo &Carg) {
@@ -158,11 +152,9 @@ void leeContrato(Contrato &Contr) {
     cout << "Horario: ";
 //    Contr.horario = validaTabla("\nSeleccione: ", , MAXTABLAHORARIO);
 
-    cout << "Numero de Cuenta: ";
-    leeTextoComoNumero("NUMERO DE CUENTA", Contr.nroCuenta, MAXNROCUENTA+1);
+    leeTextoComoNumero("Numero de Cuenta: ", Contr.nroCuenta, MAXNROCUENTA+1);
 
-    cout << "Codigo de Cuenta Interbancario (CCI): ";
-    leeTextoComoNumero("CCI", Contr.cci,MAXCCI);
+    leeTextoComoNumero("Codigo de Cuenta Interbancario (CCI): ", Contr.cci,MAXCCI);
 
     cout << "Bancos: ";
 //    Contr.banco = validaTabla("\nSeleccione: ", , MAXTABLABANCO);
@@ -232,23 +224,19 @@ void iniciaTrabajador(Trabajador &Trab) {
 }
 
 void leeTrabajador(Contrato &Contr, Trabajador &Trab) {
-    cout << "DNI: ";
-    leeTextoComoNumero("DNI",Trab.dni, MAXDNI);
+    leeTextoComoNumero("DNI: ",Trab.dni, MAXDNI);
     fflush(stdin);
     cout << "Nombre Completo: ";
     cin.getline(Trab.nombre,LIM);
     fflush(stdin);
-    cout << "RUC: ";
-    leeTextoComoNumero("RUC", Trab.ruc, MAXRUC);
+    leeTextoComoNumero("RUC: ", Trab.ruc, MAXRUC);
 
-    cout << "Telefono: ";
-    leeTextoComoNumero("TELEFONO", Trab.telefono,MAXTELEFONO);
+    leeTextoComoNumero("Telefono: ", Trab.telefono,MAXTELEFONO);
 
     cout << "Sistemas de Fondo de Pensiones: " << endl;
 //    Trab.fondoPensiones = validaTabla("\nSeleccione: ",,MAXTABLAFONDOPENSIONES);
 
-    cout << "Numero de hijos: "<<endl;
-    Trab.nroHijos = leeEntero(0, 15);
+    Trab.nroHijos = leeEntero("Numero de hijos: ", 0, 15);
 
     cout << "Estado Civil: " << endl;
 //    Trab.estadoCivil = validaTabla("\nSeleccione: ",, MAXTABLAESTADOCIVIL);
