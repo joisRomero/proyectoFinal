@@ -223,7 +223,7 @@ void iniciaTrabajador(Trabajador &Trab) {
     iniciaModuloAsistencia(Trab.asistencia);
 }
 
-void leeTrabajador(Contrato &Contr, Trabajador &Trab) {
+void leeTrabajador(Trabajador &Trab) {
     leeTextoComoNumero("DNI: ",Trab.dni, MAXDNI);
     fflush(stdin);
     cout << "Nombre Completo: ";
@@ -248,7 +248,7 @@ void leeTrabajador(Contrato &Contr, Trabajador &Trab) {
     cin.getline(Trab.correo, LIM);
     fflush(stdin);
 
-    int anio = Contr.inicioContrato.Anio;
+    int anio = Trab.contrato.inicioContrato.Anio;
     char codigoFK[MAXCODIGO];
     itoa(anio, codigoFK, 10);
 
@@ -256,7 +256,6 @@ void leeTrabajador(Contrato &Contr, Trabajador &Trab) {
     strcpy(b,Trab.dni);
 
     strcat (codigoFK, b);
-
 
     leeDireccion(Trab.direccion);
     leeContrato(Trab.contrato);

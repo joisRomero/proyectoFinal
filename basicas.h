@@ -145,7 +145,7 @@ int validaTabla(string msje, char T[][LIM], int tam) {
     return opc;
 }
 
-char continuar (string msje[]) {
+char continuar (string msje) {
     char rpta;
     do {
         cout<<msje;

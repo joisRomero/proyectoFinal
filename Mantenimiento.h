@@ -1,3 +1,65 @@
+
+//Lista trabajador
+struct NodoTrabajador{
+    Trabajador trab;
+    NodoTrabajador *sgte;
+};
+
+struct ListaTrabajador{
+    NodoTrabajador *cab;
+    int numTrabaj;
+};
+
+void iniciaListaTrabajador(ListaTrabajador &listaTrab){
+    listaTrab.cab = NULL;
+    listaTrab.numTrabaj = 0;
+}
+
+void insertaListaTrabajador(ListaTrabajador &listaTrab, Trabajador &trab, NodoTrabajador *&Aux) {
+    NodoTrabajador *p = new NodoTrabajador;
+    p->trab = trab;
+
+    if (Aux == NULL) {
+        p->sgte = listaTrab.cab;
+        listaTrab.cab = p;
+    } else {
+        p->sgte = Aux->sgte;
+        Aux->sgte = p;
+    }
+    listaTrab.numTrabaj++;
+    Aux = p;
+}
+
+void leeListaTrabajador(ListaTrabajador &listaTrab) {
+    Trabajador trab;
+    NodoTrabajador *Aux = listaTrab.cab;
+    do {
+        system("cls");
+        cout << "\n\n Lectura de Datos:";
+        iniciaTrabajador(trab);
+        leeTrabajador(trab);
+        insertaListaTrabajador(listaTrab, trab, Aux);
+    } while (continuar("\nDesea registrar otro empleado (S/N): ") == 'S');
+    fflush(stdin);
+}
+
+void mostrarListaEmpleado(ListaTrabajador &listaTrab){
+    int i = 1;
+    system("cls");
+    cout << "\nLISTA DE TRABAJADORES: \n";
+    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte) {
+        cout << "\n\n\t::TRABAJADOR "<< i++ << ":: ";
+        mostrarTrabajador(Aux->trab);
+    }
+}
+
+
+//void mostrarTrabajador(){
+//}
+//
+//void eliminarTrabajador(){
+//}
+
 void menuMantenimiento(){
     int opc;
     do {
@@ -24,13 +86,13 @@ void menuMantenimiento(){
 
         switch (opc) {
             case 1:
-               //menuMantenimiento();
+//                registrarTrabajador();
                 break;
             case 2:
-                //menuProcesos();
+//                mostrarTrabajador();
                 break;
             case 3:
-                //menuReportes();
+//                eliminarTrabajador();
                 break;
             case 4:
                 gotoxy(27,23);
