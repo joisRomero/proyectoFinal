@@ -35,21 +35,29 @@ void mostrarDireccion(Direccion &Dir) {
 //------------------------  MODULO ASISTENCIA  --------------------//
 
 struct ModuloAsistencia {
+    int anio;
+    int mes;
     int asistencia;
     int falta;
     int tardanza;
     int justificacion;
+
 };
 
 void iniciaModuloAsistencia(ModuloAsistencia &ModAsis) {
+    ModAsis.anio = 0;
+    ModAsis.mes = 0;
     ModAsis.asistencia = 0;
     ModAsis.falta = 0;
     ModAsis.tardanza = 0;
     ModAsis.justificacion = 0;
 }
 
-void leeAsistencia(ModuloAsistencia &ModAsis) {
+void leeModuloAsistencia(ModuloAsistencia &ModAsis) {
     fflush(stdin);
+    ModAsis.anio = leeEntero ( "Anio: ", 2020, 2025);
+    cout << "Mes: ";
+//    ModAsis.mes = validaTabla ("\nSeleccione: ",  , MAXTABLAMES);
     ModAsis.asistencia = leeEntero( "Asistencia: ", 0, 31);
     ModAsis.falta = leeEntero("Falta(s): ", 0, 31);
     ModAsis.tardanza = leeEntero("Tardanza(s): ", 0, 31);
@@ -58,15 +66,20 @@ void leeAsistencia(ModuloAsistencia &ModAsis) {
 }
 
 void mostrarModuloAsistencia(ModuloAsistencia &ModAsis) {
-    cout << "Asistencia: " << ModAsis.asistencia;
-    cout << "Falta(s): " << ModAsis.falta;
-    cout << "Tardanza(s): " << ModAsis.tardanza;
-    cout << "Justificacion(es): " << ModAsis.justificacion;
+    cout << "\t\tAnio: " << ModAsis.anio << endl;
+    cout << "\t\tMes: " << ModAsis.mes << endl;
+    cout << "\t______________" << endl;
+    cout << "Asistencia: " << ModAsis.asistencia << endl;
+    cout << "Falta(s): " << ModAsis.falta << endl;
+    cout << "Tardanza(s): " << ModAsis.tardanza << endl;
+    cout << "Justificacion(es): " << ModAsis.justificacion << endl;
 }
 
 //-----------------------------  SUELDO  --------------------------//
 
 struct Sueldo {
+    int anio;
+    int mes;
     float sueldoBase;
     float asignacionFamiliar;
     float descuento;
@@ -74,6 +87,8 @@ struct Sueldo {
 };
 
 void iniciaSueldo(Sueldo &Sue) {
+    Sue.anio = 0;
+    Sue.mes = 0;
     Sue.sueldoBase = 0.0;
     Sue.asignacionFamiliar = 0.0;
     Sue.descuento = 0.0;
@@ -82,6 +97,9 @@ void iniciaSueldo(Sueldo &Sue) {
 //solo llamar a esta funcion cuando ya ha cumplido 1 mes como mínimo
 void leeSueldo(Sueldo &Sue) {
     fflush(stdin);
+    Sue.anio = leeEntero ( "Anio: ", 2020, 2025);
+    cout << "Mes: ";
+//    Sue.mes = validaTabla ("\nSeleccione: ",  , MAXTABLAMES);
     Sue.sueldoBase = leeReal("Sueldo Base: ", SUELDOMINIMO, MAXSUELDOBASE);
 
 //    Sue.sueldoNeto = Sue.sueldoBase+Sue.asignacionFamiliar-Sue.descuento;
@@ -90,10 +108,13 @@ void leeSueldo(Sueldo &Sue) {
 
 
 void mostrarSueldo(Sueldo &Sue) {
-    cout << "Sueldo Base: " << Sue.sueldoBase;
-    cout << "Asignacion Familiar: " << Sue.asignacionFamiliar;
-    cout << "Descuento: " << Sue.descuento;
-    cout << "Sueldo Neto: " << Sue.sueldoNeto;
+    cout << "\t\tAnio: " << Sue.anio << endl;
+    cout << "\t\tMes: " << Sue.mes << endl;
+    cout << "\t______________" << endl;
+    cout << "Sueldo Base: " << Sue.sueldoBase << endl;
+    cout << "Asignacion Familiar: " << Sue.asignacionFamiliar << endl;
+    cout << "Descuento: " << Sue.descuento << endl;
+    cout << "Sueldo Neto: " << Sue.sueldoNeto << endl;
 }
 
 //-------------------------------  CARGO  -------------------------//

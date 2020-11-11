@@ -10,44 +10,44 @@ struct ListaTrabajador{
     int numTrabaj;
 };
 
-void iniciaListaTrabajador(ListaTrabajador &listaTrab){
-    listaTrab.cab = NULL;
-    listaTrab.numTrabaj = 0;
+void iniciaListaTrabajador(ListaTrabajador &lstTrab){
+    lstTrab.cab = NULL;
+    lstTrab.numTrabaj = 0;
 }
 
-void insertaListaTrabajador(ListaTrabajador &listaTrab, Trabajador &trab, NodoTrabajador *&Aux) {
+void insertaListaTrabajador(ListaTrabajador &lstTrab, Trabajador &trab, NodoTrabajador *&Aux) {
     NodoTrabajador *p = new NodoTrabajador;
     p->trab = trab;
 
     if (Aux == NULL) {
-        p->sgte = listaTrab.cab;
-        listaTrab.cab = p;
+        p->sgte = lstTrab.cab;
+        lstTrab.cab = p;
     } else {
         p->sgte = Aux->sgte;
         Aux->sgte = p;
     }
-    listaTrab.numTrabaj++;
+    lstTrab.numTrabaj++;
     Aux = p;
 }
 
-void leeListaTrabajador(ListaTrabajador &listaTrab) {
+void leeListaTrabajador(ListaTrabajador &lstTrab) {
     Trabajador trab;
-    NodoTrabajador *Aux = listaTrab.cab;
+    NodoTrabajador *Aux = lstTrab.cab;
     do {
         system("cls");
         cout << "\n\n Lectura de Datos:";
         iniciaTrabajador(trab);
         leeTrabajador(trab);
-        insertaListaTrabajador(listaTrab, trab, Aux);
-    } while (continuar("\nDesea registrar otro empleado (S/N): ") == 'S');
+        insertaListaTrabajador(lstTrab, trab, Aux);
+    } while (continuar("\nDesea registrar otro empleado? (S/N): ") == 'S');
     fflush(stdin);
 }
 
-void mostrarListaEmpleado(ListaTrabajador &listaTrab){
+void mostrarListaTrabajador(ListaTrabajador &lstTrab){
     int i = 1;
     system("cls");
     cout << "\nLISTA DE TRABAJADORES: \n";
-    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte) {
+    for(NodoTrabajador *Aux = lstTrab.cab; Aux != NULL; Aux = Aux->sgte) {
         cout << "\n\n\t::TRABAJADOR "<< i++ << ":: ";
         mostrarTrabajador(Aux->trab);
     }
@@ -59,6 +59,62 @@ void mostrarListaEmpleado(ListaTrabajador &listaTrab){
 //
 //void eliminarTrabajador(){
 //}
+
+//Lista ModuloAsistencia
+
+struct ListaModuloAsistencia{
+    ModuloAsistencia *datos;
+    int num, max;
+};
+
+void iniciaListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
+    lstModAsis.datos = NULL;
+    lstModAsis.num = 0;
+    lstModAsis.max = 0;
+}
+
+void creceListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
+    ModuloAsistencia *temp;
+    temp = new ModuloAsistencia[lstModAsis.max+DELTA];
+    for (int i=0; i < lstModAsis.num; i++){
+        temp[i] = lstModAsis.datos[i];
+    }
+    delete []lstModAsis.datos;
+    lstModAsis.datos = temp;
+    lstModAsis.max += DELTA;
+}
+
+void insertaModuloAsistencia(ListaModuloAsistencia &lstModAsis, ModuloAsistencia &ModAsis){
+    if(lstModAsis.num == lstModAsis.max){
+        creceListaModuloAsistencia(lstModAsis);
+    }
+    lstModAsis.datos[lstModAsis.num] = ModAsis;
+    lstModAsis.num++;
+}
+
+void leeListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
+    ModuloAsistencia ModAsis;
+    system("cls");
+    cout << "\nLectura de Datos: ";
+    do{
+        iniciaModuloAsistencia(ModAsis);
+        leeModuloAsistencia(ModAsis);
+        insertaModuloAsistencia(lstModAsis, ModAsis);
+    }while(continuar("\nDesea agregar otro Modulo de Asistencia? (S/N): ")=='S');
+}
+
+void mostrarListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
+    system("cls");
+    cout << "\nLISTA DE MODULOS DE ASISTENCIA: \n";
+    for(int i = 0; i < lstModAsis.num; i++) {
+        cout << "\n\n\t::MODULO DE ASISTENCIA "<< i+1 << ":: "; //tabladelmes
+        mostrarModuloAsistencia(lstModAsis.datos[i]);
+    }
+}
+
+void liberarListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
+    delete []lstModAsis.datos;
+}
 
 void menuMantenimiento(){
     int opc;
