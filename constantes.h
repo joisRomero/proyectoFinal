@@ -26,4 +26,3 @@
 #define MAX 100
 #define LIM 50
 #define DELTA 20
-
