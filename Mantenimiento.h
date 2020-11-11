@@ -76,7 +76,7 @@ void iniciaListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
 void creceListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
     ModuloAsistencia *temp;
     temp = new ModuloAsistencia[lstModAsis.max+DELTA];
-    for (int i=0; i < lstModAsis.num; i++){
+    for (int i = 0; i < lstModAsis.num; i++){
         temp[i] = lstModAsis.datos[i];
     }
     delete []lstModAsis.datos;
@@ -115,6 +115,65 @@ void mostrarListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
 void liberarListaModuloAsistencia(ListaModuloAsistencia &lstModAsis){
     delete []lstModAsis.datos;
 }
+
+
+//Lista Sueldo
+
+struct ListaSueldo{
+    Sueldo *datos;
+    int num, max;
+};
+
+void iniciaListaSueldo(ListaSueldo &lstSueldo){
+    lstSueldo.datos = NULL;
+    lstSueldo.max = 0;
+    lstSueldo.num = 0;
+}
+
+void creceListaSueldo(ListaSueldo &lstSueldo){
+    Sueldo *temp;
+    temp = new Sueldo[lstSueldo.max+DELTA];
+    for (int i = 0; i < lstSueldo.num; i++){
+        temp[i] = lstSueldo.datos[i];
+    }
+    delete []lstSueldo.datos;
+    lstSueldo.datos = temp;
+    lstSueldo.max += DELTA;
+}
+
+void insertaSueldo(ListaSueldo &lstSueldo, Sueldo &Sue){
+    if(lstSueldo.num == lstSueldo.max){
+        creceListaSueldo(lstSueldo);
+    }
+    lstSueldo.datos[lstSueldo.num] = Sue;
+    lstSueldo.num++;
+}
+
+void leeListaSueldo(ListaSueldo &lstSueldo){
+    Sueldo Sue;
+    system("cls");
+    cout << "\nLectura de Datos: ";
+    do{
+        iniciaSueldo(Sue);
+        leeSueldo(Sue);
+        insertaSueldo(lstSueldo, Sue);
+    }while(continuar("\nDesea agregar otro Sueldo? (S/N): ")=='S');
+}
+
+void mostrarListaSueldo(ListaSueldo &lstSueldo){
+    system("cls");
+    cout << "\nLISTA DE SUELDOS: \n";
+    for(int i = 0; i < lstSueldo.num; i++) {
+        cout << "\n\n\t::SUELDO "<< i+1 << ":: "; //tabladelmes
+        mostrarSueldo(lstSueldo.datos[i]);
+    }
+}
+
+void liberarListaSueldo(ListaSueldo &lstSueldo){
+    delete []lstSueldo.datos;
+}
+
+// ----------------  MENU MANTENIMIENTO  --------------------
 
 void menuMantenimiento(){
     int opc;
