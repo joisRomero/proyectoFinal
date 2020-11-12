@@ -8,7 +8,7 @@
 #include <string>
 #include <time.h>
 #include <windows.h>
-#include "constantes.h"
+
 
 using namespace std;
 HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -66,17 +66,15 @@ float leeReal(string msj, int min, int max) {
                 i++;
             } else {
                 band = 1;
-                cout << "\nERROR SOLO INGRESE NUMEROS";
             }
         }
 
         if (band == 0) {
             numeroValidado = atof(numero);
-            if(numeroValidado<min || numeroValidado>max) {
-                cout<<"\nERROR INGRESE NUMERO NUEVAMENTE\n";
-            }
+//            if(numeroValidado<min || numeroValidado>max) {
+//                cout<<"\nERROR INGRESE NUMERO NUEVAMENTE\n";
+//            }
         }
-
     } while (!(band == 0 && (numeroValidado>=min && numeroValidado<=max)));
 
     return numeroValidado;
@@ -92,13 +90,13 @@ char leeTextoComoNumero(string msje, char numValidado[], int maximo) {
         band = 0;
         i = 0;
 
-        cout << msje;
+        cout << msje << ":";
         cin.getline(numero,50);
 
         longitudNum = strlen(numero);
 
-        if (longitudNum != maximo) {
-            cout << "ERROR, EL " << msje <<" INGRESADO DEBE TENER "<< maximo << " CARACTERES";
+        if (longitudNum != (maximo-1)) {
+            cout << "ERROR, EL " << "'"<< msje << "'" <<" INGRESADO DEBE TENER "<< (maximo-1) << " CARACTERES\n";
             band = 1;
         }
 
@@ -107,7 +105,7 @@ char leeTextoComoNumero(string msje, char numValidado[], int maximo) {
                 i++;
             } else {
                 band = 1;
-                cout << "ERROR SOLO INGRESE NUMEROS";
+                cout << "ERROR SOLO INGRESE NUMEROS\n";
             }
         }
     } while (!(band == 0));
@@ -139,8 +137,9 @@ int validaTabla(string msje, char T[][LIM], int tam) {
     int opc;
 
     for(int i=0; i<tam; i++) {
-        cout<<i+1<<": "<<T[i]<<endl;
+        cout<< "\t"<<i+1<<": "<<T[i]<<endl;
     }
+    cout<< "\t";
     opc=leeEntero(msje,1, tam);
     return opc;
 }
@@ -187,7 +186,7 @@ void leeFecha(Fecha &FV) {
     do {
         cout<<"Ingrese Anio: [aaaa]";
         cin>>FV.Anio;
-    } while(!(FV.Anio>1900 && FV.Anio<=2020));
+    } while(!(FV.Anio>1900 && FV.Anio<=2050));
 }
 
 void MostrarFecha(Fecha &FV) {

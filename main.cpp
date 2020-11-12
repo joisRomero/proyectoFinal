@@ -1,10 +1,12 @@
+#include "constantes.h"
+#include "tablas.h"
 #include "estructuras.h"
 #include "Login.h"
 #include "Mantenimiento.h"
 #include "Procesos.h"
 #include "Reportes.h"
 
-void menuPrincipal() {
+void menuPrincipal(ListaTrabajador &listaTrab) {
     int opc;
     do {
         system("cls");
@@ -30,7 +32,7 @@ void menuPrincipal() {
 
         switch (opc) {
             case 1:
-                menuMantenimiento();
+                menuMantenimiento(listaTrab);
                 break;
             case 2:
                 menuProcesos();
@@ -49,7 +51,9 @@ void menuPrincipal() {
 int main(){
     int opc;
     //mainLogin();
-    menuPrincipal();
+    ListaTrabajador listaTrab;
+    iniciaListaTrabajador(listaTrab);
+    menuPrincipal(listaTrab);
     getch();
     cout << "\n\n\n";
     return 0;
