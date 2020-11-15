@@ -51,6 +51,18 @@ void registrarPagos(ListaTrabajador &lstTrab) {
     getch();
 }
 
+void eliminarTrabajador(ListaTrabajador &lstTrab) {
+    NodoTrabajador *Aux = lstTrab.cab;
+
+    if (lstTrab != NULL) {
+
+    } else {
+        system("cls");
+        interfazmenu("ADVERTENCIA");
+        cout << "\n\n\t\t\tNO HAY TRABAJADOS REGISTRADOS AUN";
+    }
+}
+
 // ----------------  MENU MANTENIMIENTO  --------------------
 
 void menuMantenimiento(ListaTrabajador &listaTrab) {
@@ -91,7 +103,7 @@ void menuMantenimiento(ListaTrabajador &listaTrab) {
             getch();
             break;
         case 4:
-//                eliminarTrabajador();
+            eliminarTrabajador(listaTrab);
             break;
         case 5:
             gotoxy(27,23);

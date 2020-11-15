@@ -367,7 +367,6 @@ struct Trabajador {
     Direccion direccion;
     Contrato contrato;
     Pagos pagos;
-
 };
 
 void iniciaTrabajador(Trabajador &Trab) {
