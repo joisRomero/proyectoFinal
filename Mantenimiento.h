@@ -14,7 +14,6 @@ void registrarPagos(ListaTrabajador &lstTrab) {
                 cout << "\n\n\t\t\tYA SE REGISTRARON LOS PAGOS DE ESTE MES";
             }
         } else {
-            cout << "\n\nentre despues else";
             int i = 0;
             int auxFaltas;
             while (Aux != NULL) {

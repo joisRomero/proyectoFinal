@@ -75,7 +75,7 @@ void leeModuloAsistencia(ModuloAsistencia &ModAsis) {
 
 void mostrarModuloAsistencia(ModuloAsistencia &ModAsis) {
     cout << "\t----------------------------------" << endl;
-    cout << "\tFecha: " << TablaMeses[ModAsis.mes - 1] << " - " << ModAsis.anio << endl;
+    cout << "\tFecha: " << TablaMeses[ModAsis.mes] << " - " << ModAsis.anio << endl;
     cout << "\tAsistencia: " << ModAsis.asistencia << endl;
     cout << "\tFalta(s): " << ModAsis.falta << endl;
     cout << "\tTardanza(s): " << ModAsis.tardanza << endl;
@@ -164,7 +164,7 @@ void leeSueldo(Sueldo &Sue) {
 
 void mostrarSueldo(Sueldo &Sue) {
     cout << "\t----------------------------------" << endl;
-    cout << "\tFecha: " << TablaMeses[Sue.mes - 1] << " - " << Sue.anio << endl;
+    cout << "\tFecha: " << TablaMeses[Sue.mes] << " - " << Sue.anio << endl;
     cout << "\tAsignacion Familiar: " << Sue.asignacionFamiliar << endl;
     cout << "\tBonificacion: " << Sue.bonificacion << endl;
     cout << "\tDescuento: " << Sue.descuento << endl;
@@ -308,11 +308,9 @@ void leeContrato(Contrato &Contr) {
     cout << "\tTipos de trabajadores: " << endl;
     Contr.tipoTrabajador = validaTabla("Seleccione: ", TablaTipoTrabajador, MAXTABLATIPOTRABAJADOR);
 
-    do {
-        cout << "\tInicio de contrato: ";
-        leeFecha(Contr.inicioContrato);
-    } while (!(ComparaFechas(Contr.inicioContrato,auxFechaActual) != -1));
-
+    Contr.inicioContrato.Anio = ANIOACTUAL;
+    Contr.inicioContrato.Mes = MESACTUAL;
+    Contr.inicioContrato.Dia = DIAACTUAL;
     do {
         cout << "\tFin de contrato: ";
         leeFecha(Contr.finContrato);
