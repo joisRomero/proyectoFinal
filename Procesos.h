@@ -1,4 +1,106 @@
-void menuPlanillas(){
+void PlanillaDatosPersonal(ListaTrabajador &listaTrab){
+    int i=0;
+    char LDNI[listaTrab.numTrabaj][LIM];
+    char Lnombre[listaTrab.numTrabaj][LIM];
+    char LCodigo[listaTrab.numTrabaj][LIM];
+    int LFP[listaTrab.numTrabaj];
+    int LnroH[listaTrab.numTrabaj];
+    int Lgrado[listaTrab.numTrabaj];
+
+    iniciaTabla(LDNI,listaTrab.numTrabaj);
+    iniciaTabla(Lnombre,listaTrab.numTrabaj);
+    iniciaTabla(LCodigo,listaTrab.numTrabaj);
+    iniciaVE(LFP,listaTrab.numTrabaj);
+    iniciaVE(LnroH,listaTrab.numTrabaj);
+    iniciaVE(Lgrado,listaTrab.numTrabaj);
+
+    cout << "\nPLANILLA DE DATOS DEL PERSONAL DE LA MUNICIPALIDAD DISTRITAL DE CHICLAYO" << endl << endl <<endl;
+
+    cout <<"\tDNI \t\tNOMBRES \tF. PENSIONES \tNRO. HIJOS \tGR. INSTRUCCION \t\tCODIGO";
+
+    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
+        strcpy(LDNI[i],Aux->trab.dni);
+        strcpy(Lnombre[i],Aux->trab.nombre);
+        strcpy(LCodigo[i],Aux->trab.codigo);
+        LFP[i] = Aux->trab.fondoPensiones;
+        LnroH[i] = Aux->trab.nroHijos;
+        Lgrado[i] = Aux->trab.gradoInstruccion;
+
+        cout << endl << "\t" << LDNI[i] << "\t" << Lnombre[i] << "\t\t" << TablaFomdoPensiones[LFP[i]-1] << "\t\t" << LnroH[i] << "\t\t" << TablaGradoInstruccion[Lgrado[i]-1] << "\t\t" << LCodigo[i] <<endl;
+        i++;
+
+    }
+    getch();
+}
+
+void PlanillaModuloAsistencia(ListaTrabajador &listaTrab){
+    int auxAnio, auxMes, i=0;
+    auxAnio = leeEntero("\nAnio: ",ANIOACTUAL,2045);
+    auxMes = validaTabla("\Mes: ",TablaMeses,MAXTABLAMES);
+
+    char LCodigo[listaTrab.numTrabaj][LIM];
+    char Lnombre[listaTrab.numTrabaj][LIM];
+    int LAsistencias[listaTrab.numTrabaj];
+    int LFaltas[listaTrab.numTrabaj];
+    int LTardanzas[listaTrab.numTrabaj];
+    int LJustificaciones[listaTrab.numTrabaj];
+
+    iniciaTabla(LCodigo,listaTrab.numTrabaj);
+    iniciaTabla(Lnombre,listaTrab.numTrabaj);
+    iniciaVE(LAsistencias,listaTrab.numTrabaj);
+    iniciaVE(LFaltas,listaTrab.numTrabaj);
+    iniciaVE(LTardanzas,listaTrab.numTrabaj);
+    iniciaVE(LJustificaciones,listaTrab.numTrabaj);
+
+    cout << "\nPLANILLA DEL MODULO DE ASISTENCIAS TOTAL DEL PERSONAL DE LA MUNICIPALIDAD DISTRITAL DE CHICLAYO" << endl;
+    cout << "\t\t" << TablaMeses[auxMes-1] << " - " << auxAnio << endl <<endl;
+    cout <<"\tCODIGO \t\tNOMBRES \tASISTENCIAS \tFALTAS \tTARDANZAS \tJUSTIFICACIONES";
+
+    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
+        strcpy(LCodigo[i],Aux->trab.codigo);
+        strcpy(Lnombre[i],Aux->trab.nombre);
+
+        for(int j = 0; j < MAXTABLAMES ; j++){
+            if(Aux->trab.pagos.listaAsistencia.datos[j].anio==auxAnio && Aux->trab.pagos.listaAsistencia.datos[j].mes==auxMes && Aux->trab.pagos.listaAsistencia.num!=0){
+                LAsistencias[i] += Aux->trab.pagos.listaAsistencia.datos[j].asistencia;
+                LFaltas[i] += Aux->trab.pagos.listaAsistencia.datos[j].falta;
+                LTardanzas[i] += Aux->trab.pagos.listaAsistencia.datos[j].tardanza;
+                LJustificaciones[i] += Aux->trab.pagos.listaAsistencia.datos[j].justificacion;
+            }
+        }
+
+        cout << endl << "\t" << LCodigo[i] << "\t" << Lnombre[i] << "\t\t" << LAsistencias[i] << "\t\t" << LFaltas[i] << "\t\t" << LTardanzas[i] << "\t\t" << LJustificaciones[i] <<endl;
+        i++;
+    }
+
+    getch();
+}
+
+void PlanillaInformacionInterbancaria(ListaTrabajador &listaTrab){
+    char LDNI[listaTrab.numTrabaj][LIM];
+    char Lnombre[listaTrab.numTrabaj][LIM];
+    int i=0, Lbanco[listaTrab.numTrabaj];
+
+    iniciaTabla(LDNI,listaTrab.numTrabaj);
+    iniciaTabla(Lnombre,listaTrab.numTrabaj);
+    iniciaVE(Lbanco,listaTrab.numTrabaj);
+
+    cout << "\nPLANILLA DE INFORMACION INTERBANCARIA DEL PERSONAL DE LA MUNICIPALIDAD DISTRITAL DE CHICLAYO" << endl;
+    cout <<"\tDNI \t\tNOMBRES \tBANCO ";
+
+    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
+        strcpy(LDNI[i],Aux->trab.dni);
+        strcpy(Lnombre[i],Aux->trab.nombre);
+        Lbanco[i] = Aux->trab.contrato.banco;
+
+        cout << endl << "\t" << LDNI[i] << "\t" << Lnombre[i] << "\t\t" << TablaBanco[Lbanco[i]-1] <<endl;
+        i++;
+    }
+
+    getch();
+}
+
+void menuPlanillas(ListaTrabajador &listaTrab){
     int opc;
     do {
         system("cls");
@@ -26,15 +128,19 @@ void menuPlanillas(){
 
         switch (opc) {
             case 1:
-
+                system("cls");
+                PlanillaDatosPersonal(listaTrab);
                 break;
             case 2:
-
+                system("cls");
+                PlanillaModuloAsistencia(listaTrab);
                 break;
             case 3:
-
+                system("cls");
+                PlanillaInformacionInterbancaria(listaTrab);
                 break;
             case 4:
+                system("cls");
 
                 break;
             case 5:
@@ -133,7 +239,7 @@ void menuModificarSueldo(){
     } while (!(opc == 4));
 }
 
-void menuProcesos(){
+void menuProcesos(ListaTrabajador &listaTrab){
     int opc;
     do {
         system("cls");
@@ -164,7 +270,7 @@ void menuProcesos(){
 
                 break;
             case 2:
-                menuPlanillas();
+                menuPlanillas(listaTrab);
                 break;
             case 3:
                 menuVacantes();

@@ -4,11 +4,11 @@ void registrarPagos(ListaTrabajador &lstTrab) {
     if (Aux != NULL) {
         int y = -1;
 
-        if (Aux->trab.pagos.listaASistencia.num != 0)
-            y = Aux->trab.pagos.listaASistencia.num - 1;
+        if (Aux->trab.pagos.listaAsistencia.num != 0)
+            y = Aux->trab.pagos.listaAsistencia.num - 1;
 
         if (y != -1) {
-            if(Aux->trab.pagos.listaASistencia.datos[y].mes == MESACTUAL) {
+            if(Aux->trab.pagos.listaAsistencia.datos[y].mes == MESACTUAL) {
                 system("cls");
                 interfazmenu("ADVERTENCIA");
                 cout << "\n\n\t\t\tYA SE REGISTRARON LOS PAGOS DE ESTE MES";
@@ -21,7 +21,7 @@ void registrarPagos(ListaTrabajador &lstTrab) {
                 system("cls");
                 gotoxy(8,6);
                 cout << ".::TRABAJADOR "<< i+1 << "::.";
-                leeListaModuloAsistencia(Aux->trab.pagos.listaASistencia);
+                leeListaModuloAsistencia(Aux->trab.pagos.listaAsistencia);
 
                 system("cls");
                 gotoxy(8,6);
@@ -32,9 +32,9 @@ void registrarPagos(ListaTrabajador &lstTrab) {
                     Aux->trab.pagos.listaSueldo.datos[i].asignacionFamiliar = 0.1 * Aux->trab.contrato.sueldoBase;
                 }
 
-                auxFaltas = Aux->trab.pagos.listaASistencia.datos[i].falta - Aux->trab.pagos.listaASistencia.datos[i].justificacion;
+                auxFaltas = Aux->trab.pagos.listaAsistencia.datos[i].falta - Aux->trab.pagos.listaAsistencia.datos[i].justificacion;
 
-                Aux->trab.pagos.listaSueldo.datos[i].descuento = (27.5 * auxFaltas) + (7.5 * Aux->trab.pagos.listaASistencia.datos[i].tardanza);
+                Aux->trab.pagos.listaSueldo.datos[i].descuento = (27.5 * auxFaltas) + (7.5 * Aux->trab.pagos.listaAsistencia.datos[i].tardanza);
                 Aux->trab.pagos.listaSueldo.datos[i].sueldoNeto = Aux->trab.contrato.sueldoBase + Aux->trab.pagos.listaSueldo.datos[i].bonificacion
                         - Aux->trab.pagos.listaSueldo.datos[i].descuento + Aux->trab.pagos.listaSueldo.datos[i].asignacionFamiliar;
                 i++;
