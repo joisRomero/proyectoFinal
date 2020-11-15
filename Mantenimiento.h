@@ -14,7 +14,6 @@ void registrarPagos(ListaTrabajador &lstTrab) {
                 cout << "\n\n\t\t\tYA SE REGISTRARON LOS PAGOS DE ESTE MES";
             }
         } else {
-            cout << "\n\nentre despues else";
             int i = 0;
             int auxFaltas;
             while (Aux != NULL) {
@@ -52,10 +51,36 @@ void registrarPagos(ListaTrabajador &lstTrab) {
 }
 
 void eliminarTrabajador(ListaTrabajador &lstTrab) {
-    NodoTrabajador *Aux = lstTrab.cab;
 
     if (lstTrab != NULL) {
+        char auxDni[MAXDNI];
+        NodoTrabajador *auxBorrar = lstTrab.cab;
+        NodoTrabajador *anterior = NULL;
+        system("cls");
+        interfazmenu("ELIMINAR");
+        cout << endl << endl;
+        leeTextoComoNumero("\tIngrese DNI del trabajador a eliminar: ", auxDni, MAXDNI);
 
+        while((auxBorrar != NULL) && (auxBorrar->trab.dni != auxDni)){
+            anterior = auxBorrar;
+            auxBorrar = auxBorrar->sgte;
+        }
+
+        if (auxBorrar == NULL){
+            cout << "\tElemento no encontrado";
+        } else if (anterior == NULL){
+            lstTrab.cab = lstTrab.cab->sgte;
+            liberarListaModuloAsistencia(auxBorrar->trab.pagos.listaAsistencia);
+            liberarListaSueldo(auxBorrar->trab.pagos.listaSueldo);
+            delete auxBorrar;
+            cout << "\tTrabajador eliminado con exito";
+        } else {
+            anterior->sgte = auxBorrar->sgte;
+            liberarListaModuloAsistencia(auxBorrar->trab.pagos.listaAsistencia);
+            liberarListaSueldo(auxBorrar->trab.pagos.listaSueldo);
+            delete auxBorrar;
+            cout << "\tTrabajador eliminado con exito";
+        }
     } else {
         system("cls");
         interfazmenu("ADVERTENCIA");
