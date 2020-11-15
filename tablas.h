@@ -15,3 +15,11 @@ char TablaApoyo[MAXTABLAAPOYO][LIM]= {"Secretaria", "Sereno", "Chofer", "Agente 
                                       "Jefe de Operaciones", "Cajero", "Notificador", "Promotor"};
 
 char TablaMeses[MAXTABLAMES][LIM] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+
+char TablaTotalCargos[MAXCLASEDECARGO][LIM]={
+    "Gerente", "Subgerente","Procurador publico Municipal", "Jefe del OCI", "Asesor",
+    "Auditor", "Abogado", "Relacionista publico", "Administrativo", "Periodista",
+    "Psicologo", "ingeniero", "Arquitecto", "Informatico", "Gestios de Riesgos de Desastres",
+    "Secretaria", "Sereno", "Chofer", "Agente de seguridad", "Topografo", "Jardinero", "Supervisor", "Fiscalizador",
+    "Jefe de Operaciones", "Cajero", "Notificador", "Promotor"
+};
