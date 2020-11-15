@@ -2,7 +2,7 @@ void registrarPagos(ListaTrabajador &lstTrab) {
     NodoTrabajador *Aux = lstTrab.cab;
 
     if (Aux != NULL) {
-        int y = -1;
+        int y = -1, z = 0;
 
         if (Aux->trab.pagos.listaAsistencia.num != 0)
             y = Aux->trab.pagos.listaAsistencia.num - 1;
@@ -21,21 +21,23 @@ void registrarPagos(ListaTrabajador &lstTrab) {
                 gotoxy(8,6);
                 cout << ".::TRABAJADOR "<< i+1 << "::.";
                 leeListaModuloAsistencia(Aux->trab.pagos.listaAsistencia);
-
+                if(Aux->trab.pagos.listaAsistencia.num > 0){
+                    z = Aux->trab.pagos.listaAsistencia.num-1;
+                }
                 system("cls");
                 gotoxy(8,6);
                 cout << ".::TRABAJADOR "<< i+1 << "::.";
                 leeListaSueldo(Aux->trab.pagos.listaSueldo);
 
                 if (Aux->trab.nroHijos > 0) {
-                    Aux->trab.pagos.listaSueldo.datos[i].asignacionFamiliar = 0.1 * Aux->trab.contrato.sueldoBase;
+                    Aux->trab.pagos.listaSueldo.datos[z].asignacionFamiliar = 0.1 * Aux->trab.contrato.sueldoBase;
                 }
 
-                auxFaltas = Aux->trab.pagos.listaAsistencia.datos[i].falta - Aux->trab.pagos.listaAsistencia.datos[i].justificacion;
+                auxFaltas = Aux->trab.pagos.listaAsistencia.datos[z].falta - Aux->trab.pagos.listaAsistencia.datos[z].justificacion;
 
-                Aux->trab.pagos.listaSueldo.datos[i].descuento = (27.5 * auxFaltas) + (7.5 * Aux->trab.pagos.listaAsistencia.datos[i].tardanza);
-                Aux->trab.pagos.listaSueldo.datos[i].sueldoNeto = Aux->trab.contrato.sueldoBase + Aux->trab.pagos.listaSueldo.datos[i].bonificacion
-                        - Aux->trab.pagos.listaSueldo.datos[i].descuento + Aux->trab.pagos.listaSueldo.datos[i].asignacionFamiliar;
+                Aux->trab.pagos.listaSueldo.datos[z].descuento = (27.5 * auxFaltas) + (7.5 * Aux->trab.pagos.listaAsistencia.datos[z].tardanza);
+                Aux->trab.pagos.listaSueldo.datos[z].sueldoNeto = Aux->trab.contrato.sueldoBase + Aux->trab.pagos.listaSueldo.datos[z].bonificacion
+                        - Aux->trab.pagos.listaSueldo.datos[z].descuento + Aux->trab.pagos.listaSueldo.datos[z].asignacionFamiliar;
                 i++;
                 Aux = Aux->sgte;
             }

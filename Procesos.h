@@ -1,3 +1,5 @@
+//----------------------------------------------  PLANILLAS  --------------------------------------/
+
 void PlanillaDatosPersonal(ListaTrabajador &listaTrab){
     interfazmenu("PLANILLA DE DATOS DEL PERSONAL DE LA MUNICIPALIDAD DISTRITAL DE CHICLAYO");
     cout << endl << endl;
@@ -51,6 +53,35 @@ void PlanillaInformacionInterbancaria(ListaTrabajador &listaTrab){
     getch();
 }
 
+void PlanillaPagos(ListaTrabajador &listaTrab){
+    int auxAnio;
+    auxAnio = leeEntero("\nAnio: ",ANIOACTUAL,2045);
+    system("cls");
+    int LAsignacion, LDcto, LBoni, LSueldoNeto;
+    interfazmenu("PLANILLA DE PAGOS TOTAL DEL PERSONAL DE LA MUNICIPALIDAD DISTRITAL DE CHICLAYO");
+    cout << endl << endl;
+    cout << "\t\t\tAnio: " << auxAnio << endl <<endl;
+    cout <<"\tCODIGO \t\tNOMBRES \tASIGNACION FAMILIAR \tDESCUENTO \tBONIFICACION \tSUELDO NETO";
+    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
+        LAsignacion = 0;
+        LDcto = 0;
+        LBoni = 0;
+        LSueldoNeto = 0;
+        for(int i = 0; i < Aux->trab.pagos.listaSueldo.num; i++){
+            if(Aux->trab.pagos.listaSueldo.datos[i].anio==auxAnio && Aux->trab.pagos.listaSueldo.num!=0){
+                LAsignacion += Aux->trab.pagos.listaSueldo.datos[i].asignacionFamiliar;
+                LDcto += Aux->trab.pagos.listaSueldo.datos[i].descuento;
+                LBoni += Aux->trab.pagos.listaSueldo.datos[i].bonificacion;
+                LSueldoNeto += Aux->trab.pagos.listaSueldo.datos[i].sueldoNeto;
+            }
+        }
+        cout << endl << "\t" << Aux->trab.codigo << "\t" << Aux->trab.nombre << "\t\t" << LAsignacion<< "\t\t" << LDcto
+        << "\t\t" << LBoni << "\t\t" << LSueldoNeto <<endl;
+    }
+
+    getch();
+}
+
 void menuPlanillas(ListaTrabajador &listaTrab){
     int opc;
     do {
@@ -92,7 +123,7 @@ void menuPlanillas(ListaTrabajador &listaTrab){
                 break;
             case 4:
                 system("cls");
-
+                PlanillaPagos(listaTrab);
                 break;
             case 5:
                 gotoxy(27,23);
@@ -103,7 +134,33 @@ void menuPlanillas(ListaTrabajador &listaTrab){
     } while (!(opc == 5));
 }
 
-void menuVacantes(){
+//----------------------------------------------------------- VACANTES ------------------------------------------//
+
+void vacantesDisponiblesDentroMes(ListaTrabajador &listaTrab){
+    int i=0;
+    system("cls");
+    interfazmenu("::VACANTES DISPONIBLES DENTRO DE UN MES::");
+    cout << endl << endl;
+    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
+        if(Aux->trab.contrato.finContrato.Anio == ANIOACTUAL &&  Aux->trab.contrato.finContrato.Mes == MESACTUAL +2){
+            cout << "\tCargo Vacante "<< i+1 <<": ";
+            if (Aux->trab.contrato.cargo.grupoOcupacional == 1) {
+                cout << TablaDirectorSuperior[Aux->trab.contrato.cargo.claseDeCargo -1] << endl ;
+            } else if (Aux->trab.contrato.cargo.grupoOcupacional == 2) {
+                cout << TablaEjecutivo[Aux->trab.contrato.cargo.claseDeCargo -1] << endl;
+            } else if (Aux->trab.contrato.cargo.grupoOcupacional == 3) {
+                cout << TablaEspecialista[Aux->trab.contrato.cargo.claseDeCargo -1] << endl;
+            } else {
+                cout << TablaApoyo[Aux->trab.contrato.cargo.claseDeCargo -1] << endl;
+            }
+            i++;
+        }
+    }
+
+    getch();
+}
+
+void menuVacantes(ListaTrabajador &listaTrab){
     int opc;
     do {
         system("cls");
@@ -129,7 +186,7 @@ void menuVacantes(){
 
         switch (opc) {
             case 1:
-
+                vacantesDisponiblesDentroMes(listaTrab);
                 break;
             case 2:
 
@@ -224,7 +281,7 @@ void menuProcesos(ListaTrabajador &listaTrab){
                 menuPlanillas(listaTrab);
                 break;
             case 3:
-                menuVacantes();
+                menuVacantes(listaTrab);
                 break;
             case 4:
                 menuModificarSueldo();
