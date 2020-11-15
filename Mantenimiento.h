@@ -54,14 +54,14 @@ void registrarPagos(ListaTrabajador &lstTrab) {
 
 void eliminarTrabajador(ListaTrabajador &lstTrab) {
 
-    if (lstTrab != NULL) {
+    if (lstTrab.cab != NULL) {
         char auxDni[MAXDNI];
         NodoTrabajador *auxBorrar = lstTrab.cab;
         NodoTrabajador *anterior = NULL;
         system("cls");
         interfazmenu("ELIMINAR");
         cout << endl << endl;
-        leeTextoComoNumero("\tIngrese DNI del trabajador a eliminar: ", auxDni, MAXDNI);
+        leeTextoComoNumero("\tIngrese DNI del trabajador a eliminar ", auxDni, MAXDNI);
 
         while((auxBorrar != NULL) && (auxBorrar->trab.dni != auxDni)){
             anterior = auxBorrar;
@@ -88,6 +88,7 @@ void eliminarTrabajador(ListaTrabajador &lstTrab) {
         interfazmenu("ADVERTENCIA");
         cout << "\n\n\t\t\tNO HAY TRABAJADOS REGISTRADOS AUN";
     }
+    getch();
 }
 
 // ----------------  MENU MANTENIMIENTO  --------------------
