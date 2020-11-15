@@ -96,7 +96,7 @@ char leeTextoComoNumero(string msje, char numValidado[], int maximo) {
         longitudNum = strlen(numero);
 
         if (longitudNum != (maximo-1)) {
-            cout << "ERROR, EL " << "'"<< msje << "'" <<" INGRESADO DEBE TENER "<< (maximo-1) << " CARACTERES\n";
+            cout << "\tERROR, EL VALOR" <<" INGRESADO DEBE TENER "<< (maximo-1) << " CARACTERES\n";
             band = 1;
         }
 
@@ -105,7 +105,7 @@ char leeTextoComoNumero(string msje, char numValidado[], int maximo) {
                 i++;
             } else {
                 band = 1;
-                cout << "ERROR SOLO INGRESE NUMEROS\n";
+                cout << "\tERROR SOLO INGRESE NUMEROS\n";
             }
         }
     } while (!(band == 0));
@@ -174,17 +174,18 @@ void iniciaFecha(Fecha &FV) {
     FV.Anio = 0;
 }
 
+
 void leeFecha(Fecha &FV) {
     do {
-        cout<<"\nIngrese Dia: [dd] ";
+        cout<<"\n\tIngrese Dia [dd]: ";
         cin>>FV.Dia;
     } while(!(FV.Dia>0 && FV.Dia<=31));
     do {
-        cout<<"Ingrese Mes: [mm]";
+        cout<<"\tIngrese Mes [mm]: ";
         cin>>FV.Mes;
     } while(!(FV.Mes>0 && FV.Mes<=12));
     do {
-        cout<<"Ingrese Anio: [aaaa]";
+        cout<<"\tIngrese Anio [aaaa]: ";
         cin>>FV.Anio;
     } while(!(FV.Anio>1900 && FV.Anio<=2050));
 }
@@ -276,4 +277,16 @@ void CursorOn(bool visible, DWORD size) { // set bool visible = 0 - invisible, b
     lpCursor.bVisible = visible;
     lpCursor.dwSize = size;
     SetConsoleCursorInfo(console,&lpCursor);
+}
+
+void interfazmenu(char mensaje[]) {
+    system("COLOR B0");
+//    PintarCuadrado(0,0,78,24);//Cuadro grande
+    PintarCuadrado(1,1,77,4);//Cuadro del titulo
+    gotoxy(25,2);
+    cout << "SISTEMA DE RECURSOS HUMANOS";
+    gotoxy(21,3);
+    cout << "MUNICIPALIDAD DISTRITAL DE CHICLAYO";
+    gotoxy(30,6);
+    cout << mensaje;
 }

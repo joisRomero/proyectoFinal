@@ -6,6 +6,8 @@
 #include "Procesos.h"
 #include "Reportes.h"
 
+
+
 void menuPrincipal(ListaTrabajador &listaTrab) {
     int opc;
     do {
