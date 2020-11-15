@@ -37,7 +37,7 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
                 menuMantenimiento(listaTrab);
                 break;
             case 2:
-                menuProcesos();
+                menuProcesos(listaTrab);
                 break;
             case 3:
                 menuReportes();

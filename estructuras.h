@@ -339,17 +339,17 @@ void mostrarContrato(Contrato &Contr) {
 // ------------------------- PAGOS -------------------------------//
 
 struct Pagos {
-    ListaModuloAsistencia listaASistencia;
+    ListaModuloAsistencia listaAsistencia;
     ListaSueldo listaSueldo;
 };
 
 void iniciaPagos(Pagos &pagos) {
-    iniciaListaModuloAsistencia(pagos.listaASistencia);
+    iniciaListaModuloAsistencia(pagos.listaAsistencia);
     iniciaListaSueldo(pagos.listaSueldo);
 }
 
 void mostrarPagos(Pagos &pagos) {
-    mostrarListaModuloAsistencia(pagos.listaASistencia);
+    mostrarListaModuloAsistencia(pagos.listaAsistencia);
     mostrarListaSueldo(pagos.listaSueldo);
 }
 
@@ -431,7 +431,7 @@ void mostrarTrabajador(Trabajador &Trab) {
     cout << "\tCodigo: " << Trab.codigo << endl;
     mostrarDireccion(Trab.direccion);
     mostrarContrato(Trab.contrato);
-    if (Trab.pagos.listaASistencia.num != 0)
+    if (Trab.pagos.listaAsistencia.num != 0)
         mostrarPagos(Trab.pagos);
     else
         cout << "\tEl trabajador aun no resgistra asistencia ni pagos";
@@ -496,7 +496,7 @@ void liberarTrabajador(ListaTrabajador &lstTrab) {
     while (Aux != NULL) {
         lstTrab.cab = Aux->sgte;
         liberarListaSueldo(Aux->trab.pagos.listaSueldo);
-        liberarListaModuloAsistencia(Aux->trab.pagos.listaASistencia);
+        liberarListaModuloAsistencia(Aux->trab.pagos.listaAsistencia);
         delete [] Aux;
         Aux = lstTrab.cab;
     }
