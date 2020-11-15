@@ -365,7 +365,6 @@ struct Trabajador {
     Direccion direccion;
     Contrato contrato;
     Pagos pagos;
-
 };
 
 void iniciaTrabajador(Trabajador &Trab) {
@@ -386,6 +385,7 @@ void leeTrabajador(Trabajador &Trab) {
     system("cls");
     interfazmenu("DATOS GENERALES");
     cout << endl;
+    fflush(stdin);
     leeTextoComoNumero("\tDNI",Trab.dni, MAXDNI);
     fflush(stdin);
     cout << "\tNombre Completo: ";

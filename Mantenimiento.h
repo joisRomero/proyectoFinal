@@ -52,6 +52,44 @@ void registrarPagos(ListaTrabajador &lstTrab) {
     getch();
 }
 
+void eliminarTrabajador(ListaTrabajador &lstTrab) {
+
+    if (lstTrab != NULL) {
+        char auxDni[MAXDNI];
+        NodoTrabajador *auxBorrar = lstTrab.cab;
+        NodoTrabajador *anterior = NULL;
+        system("cls");
+        interfazmenu("ELIMINAR");
+        cout << endl << endl;
+        leeTextoComoNumero("\tIngrese DNI del trabajador a eliminar: ", auxDni, MAXDNI);
+
+        while((auxBorrar != NULL) && (auxBorrar->trab.dni != auxDni)){
+            anterior = auxBorrar;
+            auxBorrar = auxBorrar->sgte;
+        }
+
+        if (auxBorrar == NULL){
+            cout << "\tElemento no encontrado";
+        } else if (anterior == NULL){
+            lstTrab.cab = lstTrab.cab->sgte;
+            liberarListaModuloAsistencia(auxBorrar->trab.pagos.listaAsistencia);
+            liberarListaSueldo(auxBorrar->trab.pagos.listaSueldo);
+            delete auxBorrar;
+            cout << "\tTrabajador eliminado con exito";
+        } else {
+            anterior->sgte = auxBorrar->sgte;
+            liberarListaModuloAsistencia(auxBorrar->trab.pagos.listaAsistencia);
+            liberarListaSueldo(auxBorrar->trab.pagos.listaSueldo);
+            delete auxBorrar;
+            cout << "\tTrabajador eliminado con exito";
+        }
+    } else {
+        system("cls");
+        interfazmenu("ADVERTENCIA");
+        cout << "\n\n\t\t\tNO HAY TRABAJADOS REGISTRADOS AUN";
+    }
+}
+
 // ----------------  MENU MANTENIMIENTO  --------------------
 
 void menuMantenimiento(ListaTrabajador &listaTrab) {
@@ -92,7 +130,7 @@ void menuMantenimiento(ListaTrabajador &listaTrab) {
             getch();
             break;
         case 4:
-//                eliminarTrabajador();
+            eliminarTrabajador(listaTrab);
             break;
         case 5:
             gotoxy(27,23);
