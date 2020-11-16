@@ -29,7 +29,7 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
         cout << "3. REPORTES";
         gotoxy(52,13);
         cout << "4. SALIR";
-        //cout << "\n\n\n";
+
         gotoxy(47,15);
         opc = leeEntero("Seleccione: ", 1,4);
 
@@ -48,7 +48,7 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
                 gotoxy(44,30);
                 cout << "GRACIAS POR USAR NUESTRO PROGRAMA";
                 gotoxy(45,32);
-                cout << "Elaborado por JoisRomero & RODO" << endl << endl;
+                cout << "Elaborado por JoisRomero & Rodo" << endl << endl;
                 break;
         }
     } while (!(opc == 4));
