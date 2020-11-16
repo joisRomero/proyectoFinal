@@ -165,6 +165,7 @@ void numeroDeVacantesPorCargo(ListaTrabajador &listaTrab){
     iniciaVE(AcumClaseDeCargo,MAXCLASEDECARGO);
     system("cls");
     interfazmenu(":: CARGO / VACANTES ::");
+    cout << endl << endl;
     for(NodoTrabajador *Aux = listaTrab.cab ; Aux != NULL; Aux = Aux->sgte){
         if(Aux->trab.contrato.cargo.grupoOcupacional == 1){
             AcumClaseDeCargo[Aux->trab.contrato.cargo.claseDeCargo]++;
@@ -217,13 +218,8 @@ void menuVacantes(ListaTrabajador &listaTrab){
                 cout << "VOLVIENDO AL MENU PROCESOS";
                 getch();
                 break;
-
         }
     } while (!(opc == 3));
-
-}
-
-void AdelantoSueldo(ListaTrabajador &listaTrab){
 
 }
 
@@ -247,11 +243,9 @@ void menuProcesos(ListaTrabajador &listaTrab){
         gotoxy(27,11);
         cout << "3. VACANTES";
         gotoxy(27,12);
-        cout << "4. ADELANTO DE SUELDO";
-        gotoxy(27,13);
-        cout << "5. IR AL MENU PRINCIPAL";
+        cout << "4. IR AL MENU PRINCIPAL";
         cout << "\n\n\n";
-        opc = leeEntero("\t\t\tSeleccione: ", 1,5);
+        opc = leeEntero("\t\t\tSeleccione: ", 1,4);
 
         switch (opc) {
             case 1:
@@ -264,14 +258,11 @@ void menuProcesos(ListaTrabajador &listaTrab){
                 menuVacantes(listaTrab);
                 break;
             case 4:
-                menuAdelantoSueldo(listaTrab);
-                break;
-            case 5:
                 gotoxy(27,23);
                 cout << "VOLVIENDO AL MENU PRINCIPAL";
                 getch();
                 break;
         }
-    } while (!(opc == 5));
+    } while (!(opc == 4));
 
 }
