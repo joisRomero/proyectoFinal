@@ -37,7 +37,8 @@ void registrarPagos(ListaTrabajador &lstTrab) {
 
                 Aux->trab.pagos.listaSueldo.datos[z].descuento = (27.5 * auxFaltas) + (7.5 * Aux->trab.pagos.listaAsistencia.datos[z].tardanza);
                 Aux->trab.pagos.listaSueldo.datos[z].sueldoNeto = Aux->trab.contrato.sueldoBase + Aux->trab.pagos.listaSueldo.datos[z].bonificacion
-                        - Aux->trab.pagos.listaSueldo.datos[z].descuento + Aux->trab.pagos.listaSueldo.datos[z].asignacionFamiliar;
+                                            - Aux->trab.pagos.listaSueldo.datos[z].descuento + Aux->trab.pagos.listaSueldo.datos[z].asignacionFamiliar
+                                            - Aux->trab.pagos.listaSueldo.datos[z].adelanto;
                 i++;
                 Aux = Aux->sgte;
             }

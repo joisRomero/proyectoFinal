@@ -174,6 +174,7 @@ void mostrarSueldo(Sueldo &Sue) {
     cout << "\tBonificacion: " << Sue.bonificacion << endl;
     cout << "\tDescuento: " << Sue.descuento << endl;
     cout << "\tSueldo Neto: " << Sue.sueldoNeto << endl;
+    cout << "\tAdelanto: " << Sue.adelanto << endl
     cout << "\t----------------------------------" << endl;
 }
 
