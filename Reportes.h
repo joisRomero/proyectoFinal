@@ -17,8 +17,8 @@ void menuReportes(){
         cout << "2. ROMERO OLIVERA";
         gotoxy(48,12);
         cout << "3. IR AL MENU PRINCIPAL";
-        gotoxy(47,15);
-        opc = leeEntero("Seleccione: ", 1,3);
+        cout << endl << endl;
+        opc = leeEntero("\t\t\t\t\t\tSeleccione: ", 1,3);
 
         switch (opc) {
             case 1:

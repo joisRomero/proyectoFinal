@@ -18,10 +18,10 @@ void PlanillaModuloAsistencia(ListaTrabajador &listaTrab){
     auxAnio = leeEntero("\nAnio: ",ANIOACTUAL,2045);
     int AcumAsistencias, AcumFaltas, AcumTardanzas, AcumJustificaciones;
     system("cls");
-    interfazmenu(":: PLANILLA DEL MODULO DE ASISTENCIAS TOTAL DEL PERSONAL DE LA MDCH ::");
+    interfazmenu(":: PLANILLA DEL MODULO ASISTENCIAS DE LA MDCH ::");
     cout << endl << endl;
-    cout << "\t\t\tAnio: " << auxAnio << endl <<endl;
-    cout <<"\tCODIGO \t\tNOMBRES \tASISTENCIAS \tFALTAS \tTARDANZAS \tJUSTIFICACIONES";
+    cout << "\t\t\t\t\t\t\tAnio: " << auxAnio << endl <<endl;
+    cout <<"\tCODIGO \t\tNOMBRES \tASISTENCIAS \tFALTAS \t\tTARDANZAS \tJUSTIFICACIONES";
 
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
         AcumAsistencias = 0;
@@ -43,12 +43,12 @@ void PlanillaModuloAsistencia(ListaTrabajador &listaTrab){
 }
 
 void PlanillaInformacionInterbancaria(ListaTrabajador &listaTrab){
-    interfazmenu("PLANILLA DE INFORMACION INTERBANCARIA DEL PERSONAL DE LA MDCH");
+    interfazmenu(":: PLANILLA INFORMACION INTERBANCARIA DE LA MDCH ::");
     cout << endl << endl;
-    cout <<"\tDNI \t\tNOMBRES \tBANCO ";
+    cout <<"\t\t\t\t\tDNI \t\tNOMBRES \t\tBANCO ";
 
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
-        cout << endl << "\t" << Aux->trab.dni << "\t" << Aux->trab.nombre << "\t\t" << TablaBanco[Aux->trab.contrato.banco-1] <<endl;
+        cout << endl << "\t\t\t\t\t" << Aux->trab.dni << "\t" << Aux->trab.nombre << "\t\t\t" << TablaBanco[Aux->trab.contrato.banco-1] <<endl;
     }
     getch();
 }
@@ -58,9 +58,9 @@ void PlanillaPagos(ListaTrabajador &listaTrab){
     auxAnio = leeEntero("\nAnio: ",ANIOACTUAL,2045);
     system("cls");
     int AcumAsignacion, AcumDcto, AcumBoni, AcumSueldoNeto;
-    interfazmenu(":: PLANILLA DE PAGOS TOTAL DEL PERSONAL DE LA MDCH ::");
+    interfazmenu("::  PLANILLA DEL TOTAL DE PAGOS DE LA MDCH  ::");
     cout << endl << endl;
-    cout << "\t\t\tAnio: " << auxAnio << endl <<endl;
+    cout << "\t\t\t\t\t\t\tAnio: " << auxAnio << endl <<endl;
     cout <<"\tCODIGO \t\tNOMBRES \tASIGNACION FAMILIAR \tDESCUENTO \tBONIFICACION \tSUELDO NETO";
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte){
         AcumAsignacion = 0;
@@ -87,26 +87,27 @@ void menuPlanillas(ListaTrabajador &listaTrab){
     do {
         system("cls");
         system("COLOR B0");
-        PintarCuadrado(0,0,78,24);//Cuadro grande
-        PintarCuadrado(1,1,77,4);//Cuadro del titulo
-        gotoxy(25,2);
+        PintarCuadrado(0,0,120,36);//Cuadro grande
+        PintarCuadrado(35,2,85,5);//Cuadro del titulo
+        gotoxy(47,3);
         cout << "SISTEMA DE RECURSOS HUMANOS";
-        gotoxy(21,3);
+        gotoxy(43,4);
         cout << "MUNICIPALIDAD DISTRITAL DE CHICLAYO";
-        gotoxy(33,6);
+        gotoxy(53,7);
         cout << "MENU PLANILLAS";
-        gotoxy(30,9);
+        gotoxy(48,10);
         cout << "1. DATOS DEL PERSONAL";
-        gotoxy(30,10);
+        gotoxy(48,11);
         cout << "2. MODULO ASISTENCIA";
-        gotoxy(30,11);
+        gotoxy(48,12);
         cout << "3. INFORMACION INTERBANCARIA";
-        gotoxy(30,12);
+        gotoxy(48,13);
         cout << "4. PAGO DE PERSONAL";
-        gotoxy(30,13);
+        gotoxy(48,14);
         cout << "5. IR AL MENU PROCESOS";
-        cout << "\n\n\n";
-        opc = leeEntero("\t\t\tSeleccione: ", 1,5);
+
+        cout << endl << endl;
+        opc = leeEntero("\t\t\t\t\t\tSeleccione: ", 1,5);
 
         switch (opc) {
             case 1:
@@ -126,7 +127,7 @@ void menuPlanillas(ListaTrabajador &listaTrab){
                 PlanillaPagos(listaTrab);
                 break;
             case 5:
-                gotoxy(27,23);
+                gotoxy(47,23);
                 cout << "VOLVIENDO AL MENU PROCESOS";
                 getch();
                 break;
@@ -164,7 +165,7 @@ void numeroDeVacantesPorCargo(ListaTrabajador &listaTrab){
     int AcumClaseDeCargo[MAXCLASEDECARGO], y=0;
     iniciaVE(AcumClaseDeCargo,MAXCLASEDECARGO);
     system("cls");
-    interfazmenu(":: CARGO / VACANTES ::");
+    interfazmenu("\t\t:: CARGO / VACANTES ::");
     cout << endl << endl;
     for(NodoTrabajador *Aux = listaTrab.cab ; Aux != NULL; Aux = Aux->sgte){
         if(Aux->trab.contrato.cargo.grupoOcupacional == 1){
@@ -179,7 +180,7 @@ void numeroDeVacantesPorCargo(ListaTrabajador &listaTrab){
     }
 
     for(int i = 0; i < MAXCLASEDECARGO; i++){
-        cout << "\t-" << TablaTotalCargos[i] << ": " << AcumClaseDeCargo[i];
+        cout << "\t\t\t-" << TablaTotalCargos[i] << ": " << AcumClaseDeCargo[i] << endl << endl;
     }
     getch();
 }
@@ -189,22 +190,22 @@ void menuVacantes(ListaTrabajador &listaTrab){
     do {
         system("cls");
         system("COLOR B0");
-        PintarCuadrado(0,0,78,24);//Cuadro grande
-        PintarCuadrado(1,1,77,4);//Cuadro del titulo
-        gotoxy(25,2);
+        PintarCuadrado(0,0,120,36);//Cuadro grande
+        PintarCuadrado(35,2,85,5);//Cuadro del titulo
+        gotoxy(47,3);
         cout << "SISTEMA DE RECURSOS HUMANOS";
-        gotoxy(21,3);
+        gotoxy(43,4);
         cout << "MUNICIPALIDAD DISTRITAL DE CHICLAYO";
-        gotoxy(33,6);
+        gotoxy(53,7);
         cout << "MENU VACANTES";
-        gotoxy(23,9);
+        gotoxy(45,10);
         cout << "1. VACANTES DISPONIBLES DENTRO DE UN MES";
-        gotoxy(23,10);
+        gotoxy(45,11);
         cout << "2. NUMERO DE VACANTES POR CARGO";
-        gotoxy(23,12);
+        gotoxy(45,12);
         cout << "3. IR AL MENU PROCESOS";
-        cout << "\n\n\n";
-        opc = leeEntero("\t\t\tSeleccione: ", 1,3);
+        cout << endl << endl;
+        opc = leeEntero("\t\t\t\t\t\tSeleccione: ", 1,3);
 
         switch (opc) {
             case 1:
@@ -214,7 +215,7 @@ void menuVacantes(ListaTrabajador &listaTrab){
                 numeroDeVacantesPorCargo(listaTrab);
                 break;
             case 3:
-                gotoxy(27,23);
+                gotoxy(47,23);
                 cout << "VOLVIENDO AL MENU PROCESOS";
                 getch();
                 break;
@@ -228,24 +229,25 @@ void menuProcesos(ListaTrabajador &listaTrab){
     do {
         system("cls");
         system("COLOR B0");
-        PintarCuadrado(0,0,78,24);//Cuadro grande
-        PintarCuadrado(1,1,77,4);//Cuadro del titulo
-        gotoxy(25,2);
+        PintarCuadrado(0,0,120,36);//Cuadro grande
+        PintarCuadrado(35,2,85,5);//Cuadro del titulo
+        gotoxy(47,3);
         cout << "SISTEMA DE RECURSOS HUMANOS";
-        gotoxy(21,3);
+        gotoxy(43,4);
         cout << "MUNICIPALIDAD DISTRITAL DE CHICLAYO";
-        gotoxy(33,6);
+        gotoxy(53,7);
         cout << "MENU PROCESOS";
-        gotoxy(27,9);
+        gotoxy(47,10);
         cout << "1. ACTUALIZAR INFORMACION";
-        gotoxy(27,10);
+        gotoxy(47,11);
         cout << "2. PLANILLAS";
-        gotoxy(27,11);
+        gotoxy(47,12);
         cout << "3. VACANTES";
-        gotoxy(27,12);
+        gotoxy(47,13);
         cout << "4. IR AL MENU PRINCIPAL";
-        cout << "\n\n\n";
-        opc = leeEntero("\t\t\tSeleccione: ", 1,4);
+
+        cout << endl << endl;
+        opc = leeEntero("\t\t\t\t\t\tSeleccione: ", 1,4);
 
         switch (opc) {
             case 1:
@@ -258,7 +260,7 @@ void menuProcesos(ListaTrabajador &listaTrab){
                 menuVacantes(listaTrab);
                 break;
             case 4:
-                gotoxy(27,23);
+                gotoxy(47,23);
                 cout << "VOLVIENDO AL MENU PRINCIPAL";
                 getch();
                 break;

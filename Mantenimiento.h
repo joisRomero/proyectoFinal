@@ -56,14 +56,14 @@ void registrarPagos(ListaTrabajador &lstTrab) {
 void mostrarTrabajadores(ListaTrabajador &lstTrab) {
     int opc;
     system("cls");
-    interfazmenu("MOSTRAR TRABAJADORES");
+    interfazmenu("\t\tMOSTRAR TRABAJADORES");
 
-    gotoxy(27,9);
+    gotoxy(48,9);
     cout << "1. MOSTRAR TODOS LOS TRABAJADORES";
-    gotoxy(27,10);
-    cout << "2. MOSTRAR UN TRABAJADOR";
+    gotoxy(48,10);
+    cout << "2. MOSTRAR UN TRABAJADOR" << endl;
 
-    opc = leeEntero("\n\t\t\tSeleccione: ", 1,2);
+    opc = leeEntero("\t\t\t\t\t\tSeleccione: ", 1,2);
 
     switch(opc) {
     case 1:
@@ -73,9 +73,9 @@ void mostrarTrabajadores(ListaTrabajador &lstTrab) {
         char auxDni[MAXDNI];
         bool band = 0;
         system("cls");
-        interfazmenu("MOSTRAR TRABAJADORES");
+        interfazmenu("\t\tMOSTRAR TRABAJADORES");
         cout << endl << endl;
-        leeTextoComoNumero("\tIngrese DNI del trabajador a mostrar", auxDni, MAXDNI);
+        leeTextoComoNumero("\t\tIngrese DNI del trabajador a mostrar", auxDni, MAXDNI);
 
         for (NodoTrabajador *Aux = lstTrab.cab; Aux != NULL; Aux = Aux->sgte){
             if (strcmp(Aux->trab.dni, auxDni) == 0){
@@ -103,7 +103,7 @@ void eliminarTrabajador(ListaTrabajador &lstTrab) {
         NodoTrabajador *auxBorrar = lstTrab.cab;
         NodoTrabajador *anterior = NULL;
         system("cls");
-        interfazmenu("ELIMINAR");
+        interfazmenu("\t\tELIMINAR");
         cout << endl << endl;
         leeTextoComoNumero("\tIngrese DNI del trabajador a eliminar", auxDni, MAXDNI);
 

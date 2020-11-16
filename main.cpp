@@ -30,8 +30,8 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
         gotoxy(52,13);
         cout << "4. SALIR";
 
-        gotoxy(47,15);
-        opc = leeEntero("Seleccione: ", 1,4);
+        cout << endl << endl;
+        opc = leeEntero("\t\t\t\t\t\tSeleccione: ", 1,4);
 
         switch (opc) {
             case 1:

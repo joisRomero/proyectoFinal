@@ -282,11 +282,11 @@ void CursorOn(bool visible, DWORD size) { // set bool visible = 0 - invisible, b
 void interfazmenu(char mensaje[]) {
     system("COLOR B0");
 //    PintarCuadrado(0,0,78,24);//Cuadro grande
-    PintarCuadrado(1,1,77,4);//Cuadro del titulo
-    gotoxy(25,2);
+    PintarCuadrado(38,2,88,5);//Cuadro del titulo
+    gotoxy(50,3);
     cout << "SISTEMA DE RECURSOS HUMANOS";
-    gotoxy(21,3);
+    gotoxy(46,4);
     cout << "MUNICIPALIDAD DISTRITAL DE CHICLAYO";
-    gotoxy(30,6);
+    gotoxy(40,7);
     cout << mensaje;
 }

@@ -16,7 +16,7 @@ void iniciaDireccion(Direccion &Dir) {
 void leeDireccion(Direccion &Dir) {
     fflush(stdin);
     system("cls");
-    interfazmenu("DATOS DE LA DIRECCION");
+    interfazmenu("\t\tDATOS DE LA DIRECCION");
     cout << endl;
     fflush(stdin);
     cout << "\tCalle: ";
@@ -60,7 +60,7 @@ void iniciaModuloAsistencia(ModuloAsistencia &ModAsis) {
 }
 
 void leeModuloAsistencia(ModuloAsistencia &ModAsis) {
-    interfazmenu("DATOS DE ASISTENCIA");
+    interfazmenu("\t\tDATOS DE ASISTENCIA");
     cout << endl;
     fflush(stdin);
     ModAsis.anio = ANIOACTUAL;
@@ -156,7 +156,7 @@ void iniciaSueldo(Sueldo &Sue) {
 }
 
 void leeSueldo(Sueldo &Sue) {
-    interfazmenu("DATOS DEl SUELDO");
+    interfazmenu("\t\tDATOS DEl SUELDO");
     cout << endl;
     fflush(stdin);
     Sue.anio = ANIOACTUAL;
@@ -241,7 +241,7 @@ void iniciaCargo(Cargo &Carg) {
 void leeCargo(Cargo &Carg) {
     fflush(stdin);
     system("cls");
-    interfazmenu("DATOS DEL CARGO");
+    interfazmenu("\t\tDATOS DEL CARGO");
     cout << endl;
     cout << "\tGrupos Ocupacionales: " << endl;
     Carg.grupoOcupacional = validaTabla("Seleccione: ", TablaGrupoOcupacional, MAXTABLAGRUPOOCUPACIONAL);
@@ -302,7 +302,7 @@ void leeContrato(Contrato &Contr) {
     auxFechaActual.Dia = DIAACTUAL;
     fflush(stdin);
     system("cls");
-    interfazmenu("DATOS DEL CONTRATO");
+    interfazmenu("\t\tDATOS DEL CONTRATO");
     cout << endl;
     cout << "\tHorario: " << endl;
     Contr.horario = validaTabla("Seleccione: ", TablaHorario, MAXTABLAHORARIO);
@@ -389,7 +389,7 @@ void iniciaTrabajador(Trabajador &Trab) {
 
 void leeTrabajador(Trabajador &Trab) {
     system("cls");
-    interfazmenu("DATOS GENERALES");
+    interfazmenu("\t\tDATOS GENERALES");
     cout << endl;
     fflush(stdin);
     leeTextoComoNumero("\tDNI",Trab.dni, MAXDNI);
