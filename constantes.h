@@ -24,6 +24,7 @@
 #define MAXCLASEDECARGO 27
 #define SUELDOMINIMO 930
 #define MAXSUELDOBASE 4000
+#define MAXOPCIONES 14
 
 #define MAX 100
 #define LIM 50

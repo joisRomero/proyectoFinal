@@ -90,7 +90,7 @@ char leeTextoComoNumero(string msje, char numValidado[], int maximo) {
         band = 0;
         i = 0;
 
-        cout << msje << ":";
+        cout << msje << ": ";
         cin.getline(numero,50);
 
         longitudNum = strlen(numero);

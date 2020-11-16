@@ -23,3 +23,7 @@ char TablaTotalCargos[MAXCLASEDECARGO][LIM]={
     "Secretaria", "Sereno", "Chofer", "Agente de seguridad", "Topografo", "Jardinero", "Supervisor", "Fiscalizador",
     "Jefe de Operaciones", "Cajero", "Notificador", "Promotor"
 };
+
+char tablaopciones[MAXOPCIONES][LIM] = {"DNI", "Nombre Completo", "Sitema de Fondo de Pension" , "Numero de hijos",
+    "Estado Civil", "Grado de Instruccion", "Calle", "Distrito", "Provincia", "Cargo", "Horario", "Bancos" ,
+    "tipos de trabajador", "Fin del contrato"};

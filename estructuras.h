@@ -306,12 +306,12 @@ void leeContrato(Contrato &Contr) {
     cout << endl;
     cout << "\tHorario: " << endl;
     Contr.horario = validaTabla("Seleccione: ", TablaHorario, MAXTABLAHORARIO);
-    Contr.sueldoBase = leeReal("\tSalario base: ",930,8000);
+    Contr.sueldoBase = leeReal("\tSalario base: ",500,8000);
 
     cout << "\tBancos: " << endl;
     Contr.banco = validaTabla("Seleccione: ", TablaBanco, MAXTABLABANCO);
 
-    cout << "\tTipos de trabajadores: " << endl;
+    cout << "\tTipos de trabajador: " << endl;
     Contr.tipoTrabajador = validaTabla("Seleccione: ", TablaTipoTrabajador, MAXTABLATIPOTRABAJADOR);
 
     Contr.inicioContrato.Anio = ANIOACTUAL;
@@ -320,10 +320,10 @@ void leeContrato(Contrato &Contr) {
     do {
         cout << "\tFin de contrato: ";
         leeFecha(Contr.finContrato);
-        } while (!(ComparaFechas(Contr.finContrato,Contr.inicioContrato) != -1 || ComparaFechas(Contr.finContrato,Contr.inicioContrato) == -1));
+    } while (!(ComparaFechas(Contr.finContrato,Contr.inicioContrato) != -1 || ComparaFechas(Contr.finContrato,Contr.inicioContrato) == 0));
 
-        leeCargo(Contr.cargo);
-    }
+    leeCargo(Contr.cargo);
+}
 
 void mostrarContrato(Contrato &Contr) {
     cout << "\n\tCONTRATO" << endl;
@@ -433,6 +433,7 @@ void mostrarTrabajador(Trabajador &Trab) {
     cout << "\tEstado Civil: " << TablaEstadoCivil[Trab.estadoCivil - 1] << endl;
     cout << "\tGrado de Instruccion: " <<  TablaGradoInstruccion[Trab.gradoInstruccion - 1] << endl;
     cout << "\tCodigo: " << Trab.codigo << endl;
+    fflush(stdin);
     mostrarDireccion(Trab.direccion);
     mostrarContrato(Trab.contrato);
     if (Trab.pagos.listaAsistencia.num != 0)

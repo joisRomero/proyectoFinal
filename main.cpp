@@ -48,7 +48,7 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
                 gotoxy(44,30);
                 cout << "GRACIAS POR USAR NUESTRO PROGRAMA";
                 gotoxy(45,32);
-                cout << "Elaborado por JoisRomero & Rodo" << endl << endl;
+                cout << "Elaborado por joisRomero & Rodo" << endl << endl;
                 break;
         }
     } while (!(opc == 4));
