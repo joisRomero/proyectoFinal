@@ -13,24 +13,25 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
     do {
         system("cls");
         system("COLOR B0");
-        PintarCuadrado(0,0,78,24);//Cuadro grande
-        PintarCuadrado(1,1,77,4);//Cuadro del titulo
-        gotoxy(25,2);
+        PintarCuadrado(0,0,120,36);//Cuadro grande
+        PintarCuadrado(35,2,85,5);//Cuadro del titulo
+        gotoxy(47,3);
         cout << "SISTEMA DE RECURSOS HUMANOS";
-        gotoxy(21,3);
+        gotoxy(43,4);
         cout << "MUNICIPALIDAD DISTRITAL DE CHICLAYO";
-        gotoxy(33,6);
+        gotoxy(53,7);
         cout << "MENU PRINCIPAL";
-        gotoxy(32,9);
+        gotoxy(52,10);
         cout << "1. MANTENIMIENTO";
-        gotoxy(32,10);
+        gotoxy(52,11);
         cout << "2. PROCESOS";
-        gotoxy(32,11);
+        gotoxy(52,12);
         cout << "3. REPORTES";
-        gotoxy(32,12);
+        gotoxy(52,13);
         cout << "4. SALIR";
-        cout << "\n\n\n";
-        opc = leeEntero("\t\t\tSeleccione: ", 1,4);
+        //cout << "\n\n\n";
+        gotoxy(47,15);
+        opc = leeEntero("Seleccione: ", 1,4);
 
         switch (opc) {
             case 1:
@@ -43,8 +44,11 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
                 menuReportes();
                 break;
             case 4:
-                gotoxy(24,23);
-                cout << "GRACIAS POR USAR NUETRO PROGRAMA";
+                PintarCuadrado(35,29,85,34);//Cuadro de los autores
+                gotoxy(44,30);
+                cout << "GRACIAS POR USAR NUESTRO PROGRAMA";
+                gotoxy(45,32);
+                cout << "Elaborado por JoisRomero & RODO" << endl << endl;
                 break;
         }
     } while (!(opc == 4));
