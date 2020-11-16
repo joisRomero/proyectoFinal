@@ -14,9 +14,9 @@ void iniciaDireccion(Direccion &Dir) {
 }
 
 void leeDireccion(Direccion &Dir) {
-    fflush(stdin);
     system("cls");
     interfazmenu("\t\tDATOS DE LA DIRECCION");
+    fflush(stdin);
     cout << endl;
     fflush(stdin);
     cout << "\tCalle: ";

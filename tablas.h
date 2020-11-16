@@ -3,7 +3,7 @@ char TablaFomdoPensiones[MAXTABLAFONDOPENSIONES][LIM]= {"AFP", "ONP"};
 char TablaEstadoCivil[MAXTABLAESTADOCIVIL][LIM]= {"Soltero(a)", "Casado(a)", "Viudo(a)", "Divorciado(a)"};
 char TablaGradoInstruccion[MAXTABLAGRADOINSTRUCCION][LIM]= {"Secundaria Completa", "Tecnico", "Universitario"};
 char TablaTipoTrabajador[MAXTABLATIPOTRABAJADOR][LIM]= {"Estable", "Contratado"};
-char TablaProvincia[MAXTABLAPROVINCIA][LIM]= {"Chiclayo", "Ferreñafe", "Lambayeque"};
+char TablaProvincia[MAXTABLAPROVINCIA][LIM]= {"Chiclayo", "Ferre¤afe", "Lambayeque"};
 char TablaHorario[MAXTABLAHORARIO][LIM]= {"Tiempo completo", "Medio tiempo"};
 
 char TablaGrupoOcupacional[MAXTABLAGRUPOOCUPACIONAL][LIM]= {"Director Superior", "Ejecutivo", "Especialista", "Apoyo"};
