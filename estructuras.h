@@ -471,8 +471,6 @@ void leeListaTrabajador(ListaTrabajador &lstTrab) {
     Trabajador trab;
     NodoTrabajador *Aux = lstTrab.cab;
     do {
-        system("cls");
-        cout << "\n\n Lectura de Datos:\n\n";
         iniciaTrabajador(trab);
         leeTrabajador(trab);
         insertaListaTrabajador(lstTrab, trab, Aux);
