@@ -14,6 +14,7 @@ void iniciaDireccion(Direccion &Dir) {
 }
 
 void leeDireccion(Direccion &Dir) {
+    fflush(stdin);
     system("cls");
     interfazmenu("DATOS DE LA DIRECCION");
     cout << endl;
@@ -21,6 +22,7 @@ void leeDireccion(Direccion &Dir) {
     cout << "\tCalle: ";
     fflush(stdin);
     cin.getline(Dir.calle, LIM);
+    fflush(stdin);
     cout << "\tDistrito: ";
     fflush(stdin);
     cin.getline(Dir.distrito, LIM);
@@ -140,6 +142,7 @@ struct Sueldo {
     float descuento;
     float sueldoNeto;
     float bonificacion;
+    float adelanto;
 };
 
 void iniciaSueldo(Sueldo &Sue) {
@@ -149,6 +152,7 @@ void iniciaSueldo(Sueldo &Sue) {
     Sue.descuento = 0.0;
     Sue.sueldoNeto = 0.0;
     Sue.bonificacion = 0.0;
+    Sue.adelanto = 0.0;
 }
 
 void leeSueldo(Sueldo &Sue) {
@@ -159,6 +163,7 @@ void leeSueldo(Sueldo &Sue) {
     Sue.mes = MESACTUAL;
     cout << endl;
     Sue.bonificacion = leeReal("\tIngrese bonificacion del mes: ",0,1000);
+    Sue.adelanto = leeReal("\tIngrese adelanto del mes(si no hubo ingrese 0): ",0,SUELDOMINIMO);
 }
 
 
@@ -310,7 +315,7 @@ void leeContrato(Contrato &Contr) {
 
     Contr.inicioContrato.Anio = ANIOACTUAL;
     Contr.inicioContrato.Mes = MESACTUAL;
-    Contr.inicioContrato.Dia = DIAACTUAL;
+    Contr.inicioContrato.Dia = 1;
     do {
         cout << "\tFin de contrato: ";
         leeFecha(Contr.finContrato);
@@ -403,11 +408,10 @@ void leeTrabajador(Trabajador &Trab) {
     cout << "\tGrados de Instruccion: " << endl;
     Trab.gradoInstruccion = validaTabla("Seleccione: ", TablaGradoInstruccion, MAXTABLAGRADOINSTRUCCION);
     fflush(stdin);
-
     leeDireccion(Trab.direccion);
     leeContrato(Trab.contrato);
-
     fflush(stdin);
+
 //  -------- GENERADOR DE CODIGO --------------
     int anio = Trab.contrato.inicioContrato.Anio;
     char codigoFK[MAXCODIGO];
