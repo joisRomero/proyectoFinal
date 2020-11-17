@@ -17,7 +17,7 @@
 #define MAXDNI 9
 #define MAXRUC 12
 #define MAXTELEFONO 10
-#define MAXCODIGO 9
+#define MAXCODIGO 13
 #define MAXNROCUENTA 17
 #define MAXCCI 21
 #define MAXSEXO 2

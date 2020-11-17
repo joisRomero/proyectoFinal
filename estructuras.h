@@ -315,7 +315,7 @@ void leeContrato(Contrato &Contr) {
     Contr.tipoTrabajador = validaTabla("Seleccione: ", TablaTipoTrabajador, MAXTABLATIPOTRABAJADOR);
 
     Contr.inicioContrato.Anio = ANIOACTUAL;
-    Contr.inicioContrato.Mes = MESACTUAL;
+    Contr.inicioContrato.Mes = MESACTUAL+1;
     Contr.inicioContrato.Dia = 1;
     do {
         cout << "\tFin de contrato: ";
@@ -409,7 +409,7 @@ void leeTrabajador(Trabajador &Trab) {
     cout << "\tGrados de Instruccion: " << endl;
     Trab.gradoInstruccion = validaTabla("Seleccione: ", TablaGradoInstruccion, MAXTABLAGRADOINSTRUCCION);
     fflush(stdin);
-    leeDireccion(Trab.direccion);
+
     leeContrato(Trab.contrato);
     fflush(stdin);
 
@@ -421,6 +421,8 @@ void leeTrabajador(Trabajador &Trab) {
     strcpy(b,Trab.dni);
     strcat (codigoFK, b);
     strcpy(Trab.codigo, codigoFK);
+    fflush(stdin);
+    leeDireccion(Trab.direccion);
 }
 
 void mostrarTrabajador(Trabajador &Trab) {

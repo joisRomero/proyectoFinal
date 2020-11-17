@@ -405,7 +405,7 @@ void actualizarInformacion(ListaTrabajador &listaTrab) {
 
                 break;
             }
-            cout << "\nInformacion actualizada con exito";
+            cout << "\n\tInformacion actualizada con exito";
         }
     }
     if (band == 0) {
