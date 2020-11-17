@@ -1,27 +1,66 @@
 //----------------------------------------------  PLANILLAS  --------------------------------------/
 
 void PlanillaDatosPersonal(ListaTrabajador &listaTrab) {
+    int i = 12;
     interfazmenu(":: PLANILLA DE DATOS DEL PERSONAL DE LA MDCH ::");
     cout << endl << endl;
-
-    cout <<"\tDNI \t\tNOMBRES \tF. PENSIONES \tNRO. HIJOS \tGR. INSTRUCCION \t\tCODIGO";
+    gotoxy(8,11);
+    cout << "DNI";
+    gotoxy(20,11);
+    cout << "NOMBRE";
+    gotoxy(52,11);
+    cout << "PENSIONES";
+    gotoxy(69,11);
+    cout << "NRO. HIJOS";
+    gotoxy(85,11);
+    cout << "GR. INSTRUCCION";
+    gotoxy(110,11);
+    cout << "CODIGO";
 
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte) {
-        cout << endl << "\t" << Aux->trab.dni << "\t" << Aux->trab.nombre << "\t\t" << TablaFomdoPensiones[Aux->trab.fondoPensiones-1]
-             << "\t\t" << Aux->trab.nroHijos << "\t\t" << TablaGradoInstruccion[Aux->trab.gradoInstruccion-1] << "\t\t" << Aux->trab.codigo <<endl;
+        gotoxy(8,i);
+        cout << Aux->trab.dni;
+        gotoxy(20,i);
+        cout << Aux->trab.nombre;
+        gotoxy(52,i);
+        cout << TablaFomdoPensiones[Aux->trab.fondoPensiones-1];
+        gotoxy(69,i);
+        cout << Aux->trab.nroHijos;
+        gotoxy(85,i);
+        cout << TablaGradoInstruccion[Aux->trab.gradoInstruccion-1] ;
+        gotoxy(110,i);
+        cout << Aux->trab.codigo;
+        i++;
     }
     getch();
 }
 
 void PlanillaModuloAsistencia(ListaTrabajador &listaTrab) {
     int auxAnio;
-    auxAnio = leeEntero("\nAnio: ",ANIOACTUAL,2045);
+    int i = 12;
     int AcumAsistencias, AcumFaltas, AcumTardanzas, AcumJustificaciones;
+
+    interfazmenu(":: PLANILLA DEL MODULO ASISTENCIAS DE LA MDCH ::");
+    cout << endl << endl;
+    auxAnio = leeEntero("\n\tIngrese anio: ",ANIOACTUAL,2045);
+
     system("cls");
     interfazmenu(":: PLANILLA DEL MODULO ASISTENCIAS DE LA MDCH ::");
     cout << endl << endl;
     cout << "\t\t\t\t\t\t\tAnio: " << auxAnio << endl <<endl;
-    cout <<"\tCODIGO \t\tNOMBRES \tASISTENCIAS \tFALTAS \t\tTARDANZAS \tJUSTIFICACIONES";
+
+    gotoxy(8,11);
+    cout << "CODIGO";
+    gotoxy(24,11);
+    cout << "NOMBRES";
+    gotoxy(56,11);
+    cout << "ASISTENCIAS";
+    gotoxy(73,11);
+    cout << "FALTAS";
+    gotoxy(85,11);
+    cout << "TARDANZAS";
+    gotoxy(99,11);
+    cout << "JUSTIFICACIONES";
 
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte) {
         AcumAsistencias = 0;
@@ -36,32 +75,72 @@ void PlanillaModuloAsistencia(ListaTrabajador &listaTrab) {
                 AcumJustificaciones += Aux->trab.pagos.listaAsistencia.datos[i].justificacion;
             }
         }
-        cout << endl << "\t" << Aux->trab.codigo << "\t" << Aux->trab.nombre << "\t\t" << AcumAsistencias << "\t\t" << AcumFaltas
-             << "\t\t" << AcumTardanzas << "\t\t" << AcumJustificaciones <<endl;
+        gotoxy(8,i);
+        cout << Aux->trab.codigo;
+        gotoxy(24,i);
+        cout << Aux->trab.nombre;
+        gotoxy(56,i);
+        cout << AcumAsistencias;
+        gotoxy(73,i);
+        cout << AcumFaltas;
+        gotoxy(85,i);
+        cout << AcumTardanzas;
+        gotoxy(99,i);
+        cout << AcumJustificaciones;
+        i++;
     }
     getch();
 }
 
 void PlanillaInformacionInterbancaria(ListaTrabajador &listaTrab) {
+    int i = 12;
     interfazmenu(":: PLANILLA INFORMACION INTERBANCARIA DE LA MDCH ::");
     cout << endl << endl;
-    cout <<"\t\t\t\t\tDNI \t\tNOMBRES \t\tBANCO ";
+    gotoxy(35,11);
+    cout << "DNI";
+    gotoxy(51,11);
+    cout << "NOMBRES";
+    gotoxy(83,11);
+    cout << "BANCO";
 
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte) {
-        cout << endl << "\t\t\t\t\t" << Aux->trab.dni << "\t" << Aux->trab.nombre << "\t\t\t" << TablaBanco[Aux->trab.contrato.banco-1] <<endl;
+        gotoxy(35,i);
+        cout << Aux->trab.dni;
+        gotoxy(51,i);
+        cout << Aux->trab.nombre;
+        gotoxy(83,i);
+        cout << TablaBanco[Aux->trab.contrato.banco-1];
+        i++;
     }
     getch();
 }
 
 void PlanillaPagos(ListaTrabajador &listaTrab) {
-    int auxAnio;
-    auxAnio = leeEntero("\nAnio: ",ANIOACTUAL,2045);
-    system("cls");
+    int auxAnio, i = 12;
     int AcumAsignacion, AcumDcto, AcumBoni, AcumSueldoNeto;
+
+    interfazmenu("::  PLANILLA DEL TOTAL DE PAGOS DE LA MDCH  ::");
+    cout << endl << endl;
+    auxAnio = leeEntero("\n\tIngrese anio: ",ANIOACTUAL,2045);
+
+    system("cls");
     interfazmenu("::  PLANILLA DEL TOTAL DE PAGOS DE LA MDCH  ::");
     cout << endl << endl;
     cout << "\t\t\t\t\t\t\tAnio: " << auxAnio << endl <<endl;
-    cout <<"\tCODIGO \t\tNOMBRES \tASIGNACION FAMILIAR \tDESCUENTO \tBONIFICACION \tSUELDO NETO";
+
+    gotoxy(8,11);
+    cout << "CODIGO";
+    gotoxy(24,11);
+    cout << "NOMBRES";
+    gotoxy(56,11);
+    cout << "ASG.FAMILIAR";
+    gotoxy(74,11);
+    cout << "DESCUENTO";
+    gotoxy(88,11);
+    cout << "BONIFICACION";
+    gotoxy(106,11);
+    cout << "SUELDO NETO";
+
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux->sgte) {
         AcumAsignacion = 0;
         AcumDcto = 0;
@@ -75,10 +154,20 @@ void PlanillaPagos(ListaTrabajador &listaTrab) {
                 AcumSueldoNeto += Aux->trab.pagos.listaSueldo.datos[i].sueldoNeto;
             }
         }
-        cout << endl << "\t" << Aux->trab.codigo << "\t" << Aux->trab.nombre << "\t\t" << AcumAsignacion<< "\t\t" << AcumDcto
-             << "\t\t" << AcumBoni << "\t\t" << AcumSueldoNeto <<endl;
+        gotoxy(8,i);
+        cout << Aux->trab.codigo;
+        gotoxy(24,i);
+        cout << Aux->trab.nombre;
+        gotoxy(56,i);
+        cout << AcumAsignacion;
+        gotoxy(74,i);
+        cout << AcumDcto;
+        gotoxy(88,i);
+        cout << AcumBoni;
+        gotoxy(106,i);
+        cout << AcumSueldoNeto;
+        i++;
     }
-
     getch();
 }
 
@@ -180,7 +269,7 @@ void numeroDeVacantesPorCargo(ListaTrabajador &listaTrab) {
     }
 
     for(int i = 0; i < MAXCLASEDECARGO; i++) {
-        cout << "\t\t\t-" << TablaTotalCargos[i] << ": " << AcumClaseDeCargo[i] << endl << endl;
+        cout << "\t\t\t-" << TablaTotalCargos[i] << ": " << AcumClaseDeCargo[i] << endl;
     }
     getch();
 }
