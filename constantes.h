@@ -14,6 +14,7 @@
 #define MAXTABLABANCO 3
 #define MAXTABLAMES 12
 
+#define MAXSEXO 2
 #define MAXDNI 9
 #define MAXRUC 12
 #define MAXTELEFONO 10

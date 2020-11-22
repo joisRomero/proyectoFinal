@@ -1,3 +1,4 @@
+char TablaSexo[MAXSEXO][LIM] = {"Masculino","Femenino"};
 char TablaBanco[MAXTABLABANCO][LIM]= {"Banco de la Nacion", "BCP", "BBVA"};
 char TablaFomdoPensiones[MAXTABLAFONDOPENSIONES][LIM]= {"AFP", "ONP"};
 char TablaEstadoCivil[MAXTABLAESTADOCIVIL][LIM]= {"Soltero(a)", "Casado(a)", "Viudo(a)", "Divorciado(a)"};

@@ -362,6 +362,7 @@ void mostrarPagos(Pagos &pagos) {
 struct Trabajador {
     char dni[MAXDNI];
     char nombre[LIM];
+    int sexo;
     int fondoPensiones;
     int nroHijos;
     int estadoCivil;
@@ -376,6 +377,7 @@ struct Trabajador {
 void iniciaTrabajador(Trabajador &Trab) {
     Trab.dni[0] = NULL;
     Trab.nombre[0] = NULL;
+    Trab.sexo = 0;
     Trab.fondoPensiones = 0;
     Trab.nroHijos = 0;
     Trab.estadoCivil = 0;
@@ -397,6 +399,7 @@ void leeTrabajador(Trabajador &Trab) {
     cout << "\tNombre Completo: ";
     cin.getline(Trab.nombre,LIM);
     fflush(stdin);
+    Trab.sexo = validaTabla("\tSexo: ",TablaSexo,MAXSEXO);
 
     cout << "\tSistemas de Fondo de Pensiones: " << endl;
     Trab.fondoPensiones = validaTabla("Seleccione: ",TablaFomdoPensiones,MAXTABLAFONDOPENSIONES);
@@ -416,7 +419,7 @@ void leeTrabajador(Trabajador &Trab) {
 //  -------- GENERADOR DE CODIGO --------------
     int anio = Trab.contrato.inicioContrato.Anio;
     char codigoFK[MAXCODIGO];
-    itoa(anio, codigoFK, 10);
+    itoa(anio, codigoFK, 10); //convierte el año (int) a char y lo almacena en codigoFK
     char b[MAXDNI];
     strcpy(b,Trab.dni);
     strcat (codigoFK, b);
@@ -430,6 +433,7 @@ void mostrarTrabajador(Trabajador &Trab) {
     cout << "\n\tDATOS GENERALES" << endl;
     cout << "\tDNI: " << Trab.dni << endl;
     cout << "\tNombre Completo: " << Trab.nombre << endl;
+    cout << "\tSexo: " << Trab.sexo << endl;
     cout << "\tSitema de Fondo de Pension: " << TablaFomdoPensiones[Trab.fondoPensiones - 1] << endl;
     cout << "\tNumero de hijos: " << Trab.nroHijos << endl;
     cout << "\tEstado Civil: " << TablaEstadoCivil[Trab.estadoCivil - 1] << endl;
