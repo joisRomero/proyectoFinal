@@ -16,6 +16,9 @@ void reporteRodo(ListaTrabajador &listaTrab){
     char saludo[LIM];
     char auxCodigo[MAXCODIGO];
     int opcion1, opcionClaseCargo, opcionTrabajador;
+    listaTrab ListaFiltradaFINAL;
+    iniciaListaTrabajador(ListaFiltradaFINAL);
+
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux -> sgte){
         do{
             cout << "Ingrese su codigo: " << endl;
