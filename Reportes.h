@@ -16,8 +16,12 @@ void reporteRodo(ListaTrabajador &listaTrab){
     char saludo[LIM];
     char auxCodigo[MAXCODIGO];
     int opcion1, opcionClaseCargo, opcionTrabajador;
-    listaTrab ListaFiltradaFINAL;
+    ListaTrabajador ListaFiltradaFINAL;
     iniciaListaTrabajador(ListaFiltradaFINAL);
+    NodoTrabajador *nodoListaFiltradaFinal;
+
+    Trabajador auxTrabajador;
+    iniciaTrabajador(auxTrabajador);
 
     for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux -> sgte){
         do{
@@ -29,7 +33,7 @@ void reporteRodo(ListaTrabajador &listaTrab){
                 cout << "Este codigo no se encuentra en nuestra base de datos" << endl;
                 cout << "Intentelo nuevamente..." << endl;
             }
-        }while(strcmpi(auxCodigo,Aux->trab.codigo)==0);
+        }while(strcmpi(auxCodigo,Aux->trab.codigo)!=0);
 
         //saludo
         if(Aux->trab.sexo==1){
@@ -43,62 +47,141 @@ void reporteRodo(ListaTrabajador &listaTrab){
             strcat(saludo,Aux->trab.nombre);
         }
 
+
         do{
             cout << "De que grupo necesita asistencia? ";
             cout << "1. Especialista";
             cout << "2. Apoyo";
-            cout << "3. Desea volver atras? ";
             opcion1 = leeEntero("\tSeleccione: ",1,2);
 
             switch (opcion1) {
-            case 1:
-                system("cls");
-                ListaTrabajador ListaFiltrada;
-                iniciaListaTrabajador(ListaFiltrada);
+                case 1:{
+                    system("cls");
+                    ListaTrabajador ListaFiltrada;
+                    iniciaListaTrabajador(ListaFiltrada);
+                    NodoTrabajador *nodoListaFiltrada = ListaFiltrada.cab;
 
-                cout << "De que clase de cargo necesita asistencia? ";
-                for(int i = 0; i < MAXTABLAESPECIALISTA; i++){
-                    cout << i+1 << ". " << TablaEspecialista[i] << endl;
-                }
-                opcionClaseCargo = leeEntero("\tSeleccione: ",1,MAXTABLAESPECIALISTA);
+                    do{
+                        cout << "De que clase de cargo necesita asistencia? ";
+                        for(int i = 0; i < MAXTABLAESPECIALISTA; i++){
+                            cout << i+1 << ". " << TablaEspecialista[i] << endl;
+                        }
+                        opcionClaseCargo = leeEntero("\tSeleccione: ",1,MAXTABLAESPECIALISTA);
+                        //limpiar pantalla
+                        cout << "Lista de Trabajadores del cargo " << TablaEspecialista[opcionClaseCargo-1];
+                        cout << endl << endl;
+                        cout << "Codigo\t\t\tNombre\t\t\t\t\tEstudios";
 
-                cout << "Lista de Trabajadores del cargo " << TablaEspecialista[opcion2-1];
-                cout << endl << endl;
-                cout << "Nombre\t\t\t\t\tEstudios";
+                        for(NodoTrabajador *AuxParaCargo = listaTrab.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
+                            if(AuxParaCargo->trab.contrato.cargo.claseDeCargo==opcionClaseCargo && strcmpi(Aux->trab.codigo,AuxParaCargo->trab.codigo)!=0){
+                                insertaListaTrabajador(ListaFiltrada,AuxParaCargo->trab,nodoListaFiltrada);
+                            }
+                        }
+                        int j = 0;
+                        for(NodoTrabajador *AuxParaCargo = ListaFiltrada.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
+                            cout << j+1 << ". " << AuxParaCargo->trab.codigo << AuxParaCargo->trab.nombre << "\t\t" << TablaGradoInstruccion[AuxParaCargo->trab.gradoInstruccion-1];
+                            j++;
+                        }
+                        cout << endl << endl;
+                        int arregloOpciones[j];
+                        iniciaVE(arregloOpciones,j);
+                        do{
+                            opcionTrabajador = leeEntero("\n\tElija un trabajador: ",1,j);
+                            if(arregloOpciones[opcionTrabajador-1]==0){
+                                j = 1; //iterar
+                                for(NodoTrabajador *AuxParaCargo = ListaFiltrada.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
+                                    if(opcionTrabajador == j){
+                                        insertaListaTrabajador(ListaFiltradaFINAL,AuxParaCargo->trab,nodoListaFiltradaFinal);
+                                    }
+                                    j++;
+                                }
+                            arregloOpciones[opcionTrabajador-1]=1;
+                            }else{
+                                cout << "Ya se selecciono este trabajador";
+                            }
+                        }while(continuar("Desea seleccionar otro trabajador?(S/N): ") == 'S');
+                    }while(continuar("Desea seleccionar otra clase de cargo?(S/N): ")=='S');
 
-                for(NodoTrabajador *AuxParaCargo = listaTrab.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
-                    if(AuxParaCargo->trab.contrato.cargo.claseDeCargo==opcionClaseCargo && strcmpi(Aux->trab.codigo,AuxParaCargo->trab.codigo)!=0){
-                        insertaListaTrabajador(ListaFiltrada,AuxParaCargo->trab);
+                    break;
                     }
-                }
-                int j=0;
-                for(NodoTrabajador *AuxParaCargo = ListaFiltrada.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
-                    cout << j+1 << ". " << AuxParaCargo->trab.nombre << "\t\t" << TablaGradoInstruccion[AuxParaCargo->trab.gradoInstruccion-1];
-                    j++;
-                }
+                case 2:
+                    system("cls");
+                    ListaTrabajador ListaFiltrada2;
+                    iniciaListaTrabajador(ListaFiltrada2);
+                    NodoTrabajador *nodoListaFiltrada2 = ListaFiltrada2.cab;
 
-                opcionTrabajador = leeEntero("\n\tSeleccione un trabajador: ");
-                if(opcionTrabajador == j){
+                    do{
+                        cout << "De que clase de cargo necesita asistencia? ";
+                        for(int i = 0; i < MAXTABLAAPOYO; i++){
+                            cout << i+1 << ". " << TablaApoyo[i] << endl;
+                        }
+                        opcionClaseCargo = leeEntero("\tSeleccione: ",1,MAXTABLAAPOYO);
+                        //limpiar pantalla
+                        cout << "Lista de Trabajadores del cargo " << TablaApoyo[opcionClaseCargo-1];
+                        cout << endl << endl;
+                        cout << "Codigo\t\t\tNombre\t\t\t\t\tEstudios";
 
-                }
+                        for(NodoTrabajador *AuxParaCargo = listaTrab.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
+                            if(AuxParaCargo->trab.contrato.cargo.claseDeCargo==opcionClaseCargo && strcmpi(Aux->trab.codigo,AuxParaCargo->trab.codigo)!=0){
+                                insertaListaTrabajador(ListaFiltrada2,AuxParaCargo->trab,nodoListaFiltrada2);
+                            }
+                        }
+                        int j = 0;
+                        for(NodoTrabajador *AuxParaCargo = ListaFiltrada2.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
+                            cout << j+1 << ". " << AuxParaCargo->trab.codigo << AuxParaCargo->trab.nombre << "\t\t" << TablaGradoInstruccion[AuxParaCargo->trab.gradoInstruccion-1];
+                            j++;
+                        }
+                        cout << endl << endl;
+                        int arregloOpciones[j];
+                        iniciaVE(arregloOpciones,j);
+                        do{
+                            opcionTrabajador = leeEntero("\n\tElija un trabajador: ",1,j);
+                            if(arregloOpciones[opcionTrabajador-1]==0){
+                                j = 1; //iterar
+                                for(NodoTrabajador *AuxParaCargo = ListaFiltrada2.cab; AuxParaCargo != NULL; AuxParaCargo = AuxParaCargo->sgte){
+                                    if(opcionTrabajador == j){
+                                        insertaListaTrabajador(ListaFiltradaFINAL,AuxParaCargo->trab,nodoListaFiltradaFinal);
+                                    }
+                                    j++;
+                                }
+                            arregloOpciones[opcionTrabajador-1]=1;
+                            }else{
+                                cout << "Ya se selecciono este trabajador";
+                            }
+                        }while(continuar("Desea seleccionar otro trabajador?(S/N): ") == 'S');
+                    }while(continuar("Desea seleccionar otra clase de cargo?(S/N): ")=='S');
 
-
-                break;
-            case 2:
-                system("cls");
-                break;
-            case 3:
-                cout << "Volviendo al menu Reportes";
-                getch();
-                break;
+                    break;
 
             }
-
         }while(continuar("\n\tDesea seleccionar otro grupo? (S/N): ") == 'S');
     }
-}
 
-void menuReportes(){
+    //Ordeno por codigo
+
+    for(NodoTrabajador *Aux = ListaFiltradaFINAL.cab; Aux->sgte != NULL; Aux = Aux -> sgte){
+        for(NodoTrabajador *Aux2 = Aux->sgte; Aux2 != NULL; Aux2 = Aux2->sgte){
+            if(strcmpi(Aux->trab.codigo,Aux2->trab.codigo)>0){
+                auxTrabajador = Aux->trab;
+                Aux->trab = Aux2->trab;
+                Aux2->trab = auxTrabajador;
+            }
+        }
+    }
+
+    for(NodoTrabajador *Aux = listaTrab.cab; Aux != NULL; Aux = Aux -> sgte){
+        if(auxCodigo, Aux->trab.codigo)
+            cout << "El Trabajador " << Aux->trab.nombre << ". Solicito la asistencia de: ";
+    }
+
+    for(NodoTrabajador *Aux = ListaFiltradaFINAL.cab; Aux != NULL; Aux = Aux -> sgte){
+        cout << "\n\t- " << Aux->trab.codigo << " :: " << Aux->trab.nombre;
+    }
+
+    getch();
+    liberarTrabajador(ListaFiltradaFINAL);
+}
+void menuReportes(ListaTrabajador &lstTrab){
     int opc;
     do {
         system("cls");
@@ -122,7 +205,7 @@ void menuReportes(){
 
         switch (opc) {
             case 1:
-               //reporte Rodo;
+                reporteRodo(lstTrab);
                 break;
             case 2:
                 //reporte JoisRomero;

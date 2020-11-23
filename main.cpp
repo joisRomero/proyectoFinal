@@ -41,7 +41,7 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
                 menuProcesos(listaTrab);
                 break;
             case 3:
-                menuReportes();
+                menuReportes(listaTrab);
                 break;
             case 4:
                 PintarCuadrado(35,29,85,34);//Cuadro de los autores
