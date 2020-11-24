@@ -312,9 +312,30 @@ void menuVacantes(ListaTrabajador &listaTrab) {
     } while (!(opc == 3));
 }
 
-void actualizarInformacion(ListaTrabajador &listaTrab) {
+void actualizarInformacion(ListaTrabajador &listaTrab, sqlite3 *db) {
     bool band = 0;
-    char auxDni[MAXDNI];
+    char auxDni[MAXDNI], auxChar[LIM];
+
+    char sql[300] = "UPDATE Trabajador set Nombre = '";
+    char sql0[300] = "UPDATE Trabajador set DNI = '";
+    char sql1[300] = "UPDATE Trabajador set Calle = '";
+    char sql2[300] = "UPDATE Trabajador set Distrito = '";
+    char sql3[300] = "UPDATE Trabajador set FondoPensiones = ";
+    char sql4[300] = "UPDATE Trabajador set NunHijos = ";
+    char sql5[300] = "UPDATE Trabajador set EstadoCivil = ";
+    char sql6[300] = "UPDATE Trabajador set GradoInstruccion = ";
+    char sql7[300] = "UPDATE Trabajador set Provincia = ";
+    char sql8[300] = "UPDATE Trabajador set GrupoOcupacional = ";
+    char sql9[300] = "UPDATE Trabajador set ClaseDeCargo = ";
+    char sql10[300] = "UPDATE Trabajador set Horario = ";
+    char sql11[300] = "UPDATE Trabajador set Banco = ";
+    char sql12[300] = "UPDATE Trabajador set TipoTrabajador = ";
+    char sql13[300] = "UPDATE Trabajador set FinContAnio = ";
+    char sql14[300] = "UPDATE Trabajador set FinContMes = ";
+    char sql15[300] = "UPDATE Trabajador set FindContDia = ";
+    char sql16[300] = "UPDATE Trabajador set Edad = ";
+    char auxSql[300] = "' WHERE Codigo = ";
+    char auxSql1[300] = " WHERE Codigo = ";
 
     system("cls");
     interfazmenu("ACTUALIZAR INFORMACION");
@@ -332,43 +353,125 @@ void actualizarInformacion(ListaTrabajador &listaTrab) {
             switch (opcion) {
             case 1:
                 leeTextoComoNumero("\tDNI",Aux->trab.dni, MAXDNI);
+                strcat(sql0,Aux->trab.dni);
+                strcat(auxSql,Aux->trab.codigo);
+                strcat(sql0,auxSql);
+                if (sqlite3_exec(db, sql0, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             case 2:
                 cout << "\tNombre Completo: ";
                 fflush(stdin);
                 cin.getline(Aux->trab.nombre,LIM);
+                strcat(sql,Aux->trab.nombre);
+                strcat(auxSql,Aux->trab.codigo);
+                strcat(sql,auxSql);
+                if (sqlite3_exec(db, sql, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
+
                 break;
             case 3:
-                cout << "\tSistemas de Fondo de Pensiones: " << endl;
-                Aux->trab.fondoPensiones = validaTabla("Seleccione: ",TablaFomdoPensiones,MAXTABLAFONDOPENSIONES);
+                Aux->trab.edad = leeEntero("\tEdad: ",18,65);
+                itoa(Aux->trab.edad,auxChar,10);
+                strcat(sql16,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql16,auxSql1);
+                if (sqlite3_exec(db, sql16, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    getch();
+                    return;
+                }
+
                 break;
             case 4:
-                Aux->trab.nroHijos = leeEntero("\tNumero de hijos: ", 0, 15);
+                cout << "\tSistemas de Fondo de Pensiones: " << endl;
+                Aux->trab.fondoPensiones = validaTabla("Seleccione: ",TablaFomdoPensiones,MAXTABLAFONDOPENSIONES);
+                itoa(Aux->trab.fondoPensiones,auxChar,10);
+                strcat(sql3,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql3,auxSql1);
+                if (sqlite3_exec(db, sql3, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             case 5:
-                cout << "\tEstado Civil: " << endl;
-                Aux->trab.estadoCivil = validaTabla("Seleccione: ",TablaEstadoCivil, MAXTABLAESTADOCIVIL);
+                Aux->trab.nroHijos = leeEntero("\tNumero de hijos: ", 0, 15);
+                itoa(Aux->trab.nroHijos,auxChar,10);
+                strcat(sql4,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql4,auxSql1);
+                if (sqlite3_exec(db, sql4, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             case 6:
-                cout << "\tGrados de Instruccion: " << endl;
-                Aux->trab.gradoInstruccion = validaTabla("Seleccione: ", TablaGradoInstruccion, MAXTABLAGRADOINSTRUCCION);
+                cout << "\tEstado Civil: " << endl;
+                Aux->trab.estadoCivil = validaTabla("Seleccione: ",TablaEstadoCivil, MAXTABLAESTADOCIVIL);
+                itoa(Aux->trab.estadoCivil,auxChar,10);
+                strcat(sql5,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql5,auxSql1);
+                if (sqlite3_exec(db, sql5, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             case 7:
+                cout << "\tGrados de Instruccion: " << endl;
+                Aux->trab.gradoInstruccion = validaTabla("Seleccione: ", TablaGradoInstruccion, MAXTABLAGRADOINSTRUCCION);
+                itoa(Aux->trab.gradoInstruccion,auxChar,10);
+                strcat(sql6,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql6,auxSql1);
+                if (sqlite3_exec(db, sql6, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
+                break;
+            case 8:
                 cout << "\tCalle: ";
                 fflush(stdin);
                 cin.getline(Aux->trab.direccion.calle, LIM);
+                strcat(sql1,Aux->trab.direccion.calle);
+                strcat(auxSql,Aux->trab.codigo);
+                strcat(sql1,auxSql);
+                if (sqlite3_exec(db, sql1, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
-            case 8:
+            case 9:
                 cout << "\tDistrito: ";
                 fflush(stdin);
                 cin.getline(Aux->trab.direccion.distrito, LIM);
+                strcat(sql2,Aux->trab.direccion.distrito);
+                strcat(auxSql,Aux->trab.codigo);
+                strcat(sql2,auxSql);
+                if (sqlite3_exec(db, sql2, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
-            case 9:
+            case 10:
                 cout << "\tProvincia: " << endl;
                 Aux->trab.direccion.provincia = validaTabla("Seleccione: ", TablaProvincia, MAXTABLAPROVINCIA);
                 fflush(stdin);
+                itoa(Aux->trab.direccion.provincia,auxChar,10);
+                strcat(sql7,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql7,auxSql1);
+                if (sqlite3_exec(db, sql7, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
-            case 10:
+            case 11:
                 cout << "\tGrupos Ocupacionales: " << endl;
                 Aux->trab.contrato.cargo.grupoOcupacional = validaTabla("Seleccione: ", TablaGrupoOcupacional, MAXTABLAGRUPOOCUPACIONAL);
 
@@ -382,27 +485,90 @@ void actualizarInformacion(ListaTrabajador &listaTrab) {
                 } else {
                     Aux->trab.contrato.cargo.claseDeCargo = validaTabla("Seleccione: ", TablaApoyo, MAXTABLAAPOYO);
                 }
-                break;
-            case 11:
-                cout << "\tHorario: " << endl;
-                Aux->trab.contrato.horario = validaTabla("Seleccione: ", TablaHorario, MAXTABLAHORARIO);
+                itoa(Aux->trab.contrato.cargo.grupoOcupacional,auxChar,10);
+                strcat(sql8,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql8,auxSql1);
+                if (sqlite3_exec(db, sql8, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
+                itoa(Aux->trab.contrato.cargo.claseDeCargo,auxChar,10);
+                strcat(sql9,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql9,auxSql1);
+                if (sqlite3_exec(db, sql9, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             case 12:
-                cout << "\tBancos: " << endl;
-                Aux->trab.contrato.banco = validaTabla("Seleccione: ", TablaBanco, MAXTABLABANCO);
+                cout << "\tHorario: " << endl;
+                Aux->trab.contrato.horario = validaTabla("Seleccione: ", TablaHorario, MAXTABLAHORARIO);
+                itoa(Aux->trab.contrato.horario,auxChar,10);
+                strcat(sql10,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql10,auxSql1);
+                if (sqlite3_exec(db, sql10, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             case 13:
-                cout << "\tTipos de trabajador: " << endl;
-                Aux->trab.contrato.tipoTrabajador = validaTabla("Seleccione: ", TablaTipoTrabajador, MAXTABLATIPOTRABAJADOR);
-
+                cout << "\tBancos: " << endl;
+                Aux->trab.contrato.banco = validaTabla("Seleccione: ", TablaBanco, MAXTABLABANCO);
+                itoa(Aux->trab.contrato.banco,auxChar,10);
+                strcat(sql11,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql11,auxSql1);
+                if (sqlite3_exec(db, sql11, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             case 14:
+                cout << "\tTipos de trabajador: " << endl;
+                Aux->trab.contrato.tipoTrabajador = validaTabla("Seleccione: ", TablaTipoTrabajador, MAXTABLATIPOTRABAJADOR);
+                itoa( Aux->trab.contrato.tipoTrabajador,auxChar,10);
+                strcat(sql12,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql12,auxSql1);
+                if (sqlite3_exec(db, sql12, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
+                break;
+            case 15:
                 do {
                     cout << "\tFin de contrato: ";
                     leeFecha(Aux->trab.contrato.finContrato);
                 } while (!(ComparaFechas(Aux->trab.contrato.finContrato,Aux->trab.contrato.inicioContrato) != -1 ||
                            ComparaFechas(Aux->trab.contrato.finContrato,Aux->trab.contrato.inicioContrato) == 0));
 
+                itoa( Aux->trab.contrato.finContrato.Anio,auxChar,10);
+                strcat(sql12,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql13,auxSql1);
+                if (sqlite3_exec(db, sql13, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
+                itoa( Aux->trab.contrato.finContrato.Mes,auxChar,10);
+                strcat(sql12,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql14,auxSql1);
+                if (sqlite3_exec(db, sql14, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
+                itoa( Aux->trab.contrato.finContrato.Dia,auxChar,10);
+                strcat(sql12,auxChar);
+                strcat(auxSql1,Aux->trab.codigo);
+                strcat(sql15,auxSql1);
+                if (sqlite3_exec(db, sql15, NULL, NULL, NULL) != SQLITE_OK) {
+                    gestionaError(db);
+                    return;
+                }
                 break;
             }
             cout << "\n\tInformacion actualizada con exito";
@@ -416,7 +582,7 @@ void actualizarInformacion(ListaTrabajador &listaTrab) {
 }
 
 
-void menuProcesos(ListaTrabajador &listaTrab) {
+void menuProcesos(ListaTrabajador &listaTrab, sqlite3 *db) {
     int opc;
     do {
         system("cls");
@@ -443,7 +609,7 @@ void menuProcesos(ListaTrabajador &listaTrab) {
 
         switch (opc) {
         case 1:
-            actualizarInformacion(listaTrab);
+            actualizarInformacion(listaTrab,db);
             break;
         case 2:
             menuPlanillas(listaTrab);

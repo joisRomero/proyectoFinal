@@ -256,9 +256,6 @@ void reporteRodo(ListaTrabajador &listaTrab){
     getch();
 }
 
-/*
-    Reporte de Romero Olivera Jose Luis
-*/
 void reporteJoseRomero(ListaTrabajador &listaTrab) {
     int cantPersonas;
     float maximo = (listaTrab.numTrabaj/2);
@@ -446,7 +443,7 @@ void reporteJoseRomero(ListaTrabajador &listaTrab) {
     getch();
 }
 
-void menuReportes(ListaTrabajador &lstTrab){
+void menuReportes(ListaTrabajador &listaTrab) {
     int opc;
     do {
         system("cls");
@@ -466,23 +463,22 @@ void menuReportes(ListaTrabajador &lstTrab){
         gotoxy(48,12);
         cout << "3. IR AL MENU PRINCIPAL";
         cout << endl << endl;
-        fflush(stdin);
         opc = leeEntero("\t\t\t\t\t\tSeleccione: ", 1,3);
 
         switch (opc) {
-            case 1:
-                system("cls");
-                reporteRodo(lstTrab);
-                fflush(stdin);
-                break;
-            case 2:
-                reporteJoseRomero(listaTrab);
-                break;
-            case 3:
-                gotoxy(47,23);
-                cout << "VOLVIENDO AL MENU PRINCIPAL";
-                getch();
-                break;
+        case 1:
+            system("cls");
+            reporteRodo(listaTrab);
+            fflush(stdin);
+            break;
+        case 2:
+            reporteJoseRomero(listaTrab);
+            break;
+        case 3:
+            gotoxy(47,23);
+            cout << "VOLVIENDO AL MENU PRINCIPAL";
+            getch();
+            break;
         }
     } while (!(opc == 3));
 }

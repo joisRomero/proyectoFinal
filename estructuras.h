@@ -1,5 +1,9 @@
 #include "basicas.h"
-//---------------------------  DIRECCIÓN  -------------------------//
+//---------------------------  DIRECCION  -------------------------//
+int gestionaError(sqlite3 *db){
+    fprintf(stderr, "Error: %s\n", sqlite3_errmsg(db));
+    return sqlite3_errcode(db);
+}
 
 struct Direccion {
     char calle[LIM];
@@ -63,8 +67,6 @@ void leeModuloAsistencia(ModuloAsistencia &ModAsis) {
     interfazmenu("\t\tDATOS DE ASISTENCIA");
     cout << endl;
     fflush(stdin);
-    ModAsis.anio = ANIOACTUAL;
-    ModAsis.mes = MESACTUAL;
     cout << endl;
     ModAsis.falta = leeEntero("\tFalta(s): ", 0, 31);
     ModAsis.tardanza = leeEntero("\tTardanza(s): ", 0, 31);
@@ -77,7 +79,7 @@ void leeModuloAsistencia(ModuloAsistencia &ModAsis) {
 
 void mostrarModuloAsistencia(ModuloAsistencia &ModAsis) {
     cout << "\t----------------------------------" << endl;
-    cout << "\tFecha: " << TablaMeses[ModAsis.mes] << " - " << ModAsis.anio << endl;
+    cout << "\tFecha: " << TablaMeses[ModAsis.mes-1] << " - " << ModAsis.anio << endl;
     cout << "\tAsistencia: " << ModAsis.asistencia << endl;
     cout << "\tFalta(s): " << ModAsis.falta << endl;
     cout << "\tTardanza(s): " << ModAsis.tardanza << endl;
@@ -159,22 +161,20 @@ void leeSueldo(Sueldo &Sue) {
     interfazmenu("\t\tDATOS DEl SUELDO");
     cout << endl;
     fflush(stdin);
-    Sue.anio = ANIOACTUAL;
-    Sue.mes = MESACTUAL;
     cout << endl;
     Sue.bonificacion = leeReal("\tIngrese bonificacion del mes: ",0,1000);
-    Sue.adelanto = leeReal("\tIngrese adelanto del mes(si no hubo ingrese 0): ",0,SUELDOMINIMO);
+    Sue.adelanto = leeReal("\tIngrese adelanto del mes: ",0,SUELDOMINIMO);
 }
 
 
 void mostrarSueldo(Sueldo &Sue) {
     cout << "\t----------------------------------" << endl;
-    cout << "\tFecha: " << TablaMeses[Sue.mes] << " - " << Sue.anio << endl;
+    cout << "\tFecha: " << TablaMeses[Sue.mes-1] << " - " << Sue.anio << endl;
     cout << "\tAsignacion Familiar: " << Sue.asignacionFamiliar << endl;
     cout << "\tBonificacion: " << Sue.bonificacion << endl;
     cout << "\tDescuento: " << Sue.descuento << endl;
-    cout << "\tSueldo Neto: " << Sue.sueldoNeto << endl;
     cout << "\tAdelanto: " << Sue.adelanto << endl;
+    cout << "\tSueldo Neto: " << Sue.sueldoNeto << endl;
     cout << "\t----------------------------------" << endl;
 }
 
@@ -360,6 +360,7 @@ void mostrarPagos(Pagos &pagos) {
 //-------------------------  TRABAJADOR  --------------------------//
 
 struct Trabajador {
+    char codigo[MAXCODIGO];
     char dni[MAXDNI];
     char nombre[LIM];
     int sexo;
@@ -367,7 +368,8 @@ struct Trabajador {
     int nroHijos;
     int estadoCivil;
     int gradoInstruccion;
-    char codigo[MAXCODIGO];
+    int edad;
+
 
     Direccion direccion;
     Contrato contrato;
@@ -377,12 +379,13 @@ struct Trabajador {
 void iniciaTrabajador(Trabajador &Trab) {
     Trab.dni[0] = NULL;
     Trab.nombre[0] = NULL;
-    Trab.sexo = 0;
     Trab.fondoPensiones = 0;
+    Trab.sexo = 0;
     Trab.nroHijos = 0;
     Trab.estadoCivil = 0;
     Trab.gradoInstruccion = 0;
     Trab.codigo[0] = NULL;
+    Trab.edad = 0;
 
     iniciaDireccion(Trab.direccion);
     iniciaContrato(Trab.contrato);
@@ -399,8 +402,9 @@ void leeTrabajador(Trabajador &Trab) {
     cout << "\tNombre Completo: ";
     cin.getline(Trab.nombre,LIM);
     fflush(stdin);
-    Trab.sexo = validaTabla("\tSexo: ",TablaSexo,MAXSEXO);
-
+    Trab.edad = leeEntero("\tEdad: ",18,65);
+    cout << "\tSexo: " << endl;
+    Trab.sexo = validaTabla("Selecciones: ",TablaSexo,MAXSEXO);
     cout << "\tSistemas de Fondo de Pensiones: " << endl;
     Trab.fondoPensiones = validaTabla("Seleccione: ",TablaFomdoPensiones,MAXTABLAFONDOPENSIONES);
 
@@ -419,7 +423,7 @@ void leeTrabajador(Trabajador &Trab) {
 //  -------- GENERADOR DE CODIGO --------------
     int anio = Trab.contrato.inicioContrato.Anio;
     char codigoFK[MAXCODIGO];
-    itoa(anio, codigoFK, 10); //convierte el año (int) a char y lo almacena en codigoFK
+    itoa(anio, codigoFK, 10);
     char b[MAXDNI];
     strcpy(b,Trab.dni);
     strcat (codigoFK, b);
@@ -433,7 +437,8 @@ void mostrarTrabajador(Trabajador &Trab) {
     cout << "\n\tDATOS GENERALES" << endl;
     cout << "\tDNI: " << Trab.dni << endl;
     cout << "\tNombre Completo: " << Trab.nombre << endl;
-    cout << "\tSexo: " << Trab.sexo << endl;
+    cout << "\tEdad: " << Trab.edad << endl;
+    cout << "\tSexo: " << TablaSexo[Trab.sexo-1] << endl;
     cout << "\tSitema de Fondo de Pension: " << TablaFomdoPensiones[Trab.fondoPensiones - 1] << endl;
     cout << "\tNumero de hijos: " << Trab.nroHijos << endl;
     cout << "\tEstado Civil: " << TablaEstadoCivil[Trab.estadoCivil - 1] << endl;
@@ -479,13 +484,47 @@ void insertaListaTrabajador(ListaTrabajador &lstTrab, Trabajador &trab, NodoTrab
     Aux = p;
 }
 
-void leeListaTrabajador(ListaTrabajador &lstTrab) {
+void introduceEnLaBaseDatos(Trabajador &trab, sqlite3 *db){
+    char sql[500];
+
+    sprintf(sql, "INSERT INTO Trabajador (Codigo, DNI, Nombre, FondoPensiones, NunHijos, EstadoCivil, GradoInstruccion, Sexo, Edad) VALUES ('%s', '%s', '%s', %d, %d, %d, %d, %d, %d)",
+            trab.codigo, trab.dni, trab.nombre, trab.fondoPensiones, trab.nroHijos, trab.estadoCivil, trab.gradoInstruccion, trab.sexo, trab.edad);
+    if (sqlite3_exec(db, sql, NULL, NULL, NULL) != SQLITE_OK){
+        gestionaError(db);
+        return;
+    }
+
+    sprintf(sql, "INSERT INTO Contrato (Codigo, Horario, Banco, TipoTrabajador, SueldoBase, InicioContAnio, InicioContMes, InicioContdia, FinContAnio, FinContMes, FinContDia) VALUES ('%s', %d, %d, %d, %f, %d, %d, %d, %d, %d, %d)",
+            trab.codigo, trab.contrato.horario, trab.contrato.banco, trab.contrato.tipoTrabajador, trab.contrato.sueldoBase, trab.contrato.inicioContrato.Anio, trab.contrato.inicioContrato.Mes,
+                trab.contrato.inicioContrato.Dia, trab.contrato.finContrato.Anio, trab.contrato.finContrato.Mes, trab.contrato.finContrato.Dia);
+    if (sqlite3_exec(db, sql, NULL, NULL, NULL) != SQLITE_OK){
+        gestionaError(db);
+        return;
+    }
+
+    sprintf(sql, "INSERT INTO Cargo (Codigo, GrupoOcupacional, ClaseDeCargo) VALUES ('%s', %d, %d)", trab.codigo, trab.contrato.cargo.grupoOcupacional,
+            trab.contrato.cargo.claseDeCargo);
+    if (sqlite3_exec(db, sql, NULL, NULL, NULL) != SQLITE_OK){
+        gestionaError(db);
+        return;
+    }
+    sprintf(sql, "INSERT INTO Direccion (Codigo, Calle, Distrito, Provincia) VALUES ('%s', '%s', '%s', %d)", trab.codigo, trab.direccion.calle,
+            trab.direccion.distrito, trab.direccion.provincia);
+    if (sqlite3_exec(db, sql, NULL, NULL, NULL) != SQLITE_OK){
+        gestionaError(db);
+        return;
+    }
+}
+
+
+void leeListaTrabajador(ListaTrabajador &lstTrab, sqlite3 *db) {
     Trabajador trab;
     NodoTrabajador *Aux = lstTrab.cab;
     do {
         iniciaTrabajador(trab);
         leeTrabajador(trab);
         insertaListaTrabajador(lstTrab, trab, Aux);
+        introduceEnLaBaseDatos(trab,db);
     } while (continuar("\n\tDesea registrar otro empleado? (S/N): ") == 'S');
     fflush(stdin);
 }

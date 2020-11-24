@@ -1,14 +1,21 @@
+/*
+    Programa elaborado por:
+            Gonzales Bocanegra Jose David
+            Romero Olivera Jose Luis
+*/
+
+#include "sqlite3.h"
 #include "constantes.h"
 #include "tablas.h"
 #include "estructuras.h"
+#include "BaseDeDatos.h"
 #include "Login.h"
 #include "Mantenimiento.h"
 #include "Procesos.h"
 #include "Reportes.h"
 
 
-
-void menuPrincipal(ListaTrabajador &listaTrab) {
+void menuPrincipal(ListaTrabajador &listaTrab, sqlite3 *db) {
     int opc;
     do {
         system("cls");
@@ -35,10 +42,10 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
 
         switch (opc) {
             case 1:
-                menuMantenimiento(listaTrab);
+                menuMantenimiento(listaTrab, db);
                 break;
             case 2:
-                menuProcesos(listaTrab);
+                menuProcesos(listaTrab, db);
                 break;
             case 3:
                 menuReportes(listaTrab);
@@ -54,13 +61,35 @@ void menuPrincipal(ListaTrabajador &listaTrab) {
     } while (!(opc == 4));
 }
 
+
+
 int main(){
-    int opc;
+    sqlite3 *db;
+    sqlite3_stmt *query01, *query02, *query03, *query04, *query05, *query06;
+
     //mainLogin();
     ListaTrabajador listaTrab;
     iniciaListaTrabajador(listaTrab);
-    menuPrincipal(listaTrab);
+
+    // Abrir base de datos
+    if(sqlite3_open("baseDeDatos.db", &db) != SQLITE_OK) {
+        return gestionaError(db);
+    }
+    // llena la lista con los datos
+    llenarLista(listaTrab, db, query01, query02, query03, query04, query05, query06);
+    menuPrincipal(listaTrab, db);
     getch();
+
+    //cierra las sentencias SQL
+    sqlite3_finalize(query01);
+    sqlite3_finalize(query02);
+    sqlite3_finalize(query03);
+    sqlite3_finalize(query04);
+    sqlite3_finalize(query05);
+    sqlite3_finalize(query06);
+    //cierra la base de datos
+    sqlite3_close(db);
+
     cout << "\n\n\n";
     return 0;
 }
